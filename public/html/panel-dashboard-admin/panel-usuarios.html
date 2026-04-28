@@ -1,0 +1,54 @@
+<!-- PANEL USARIOS-->
+    <div class="content-panel" id="panel-usuarios">
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="card-title">Gestión de Usuarios</div>
+            <div class="card-subtitle">Empleados y administradores</div>
+          </div>
+          <button class="btn-primary" onclick="openFormUsuario()">
+            + Agregar Usuario
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Formulario usuario -->
+      <div class="card" id="form-usuario-card" style="display:none">
+        <div class="card-title" id="form-usuario-title">Agregar Usuario</div>
+        <div class="form-grid">
+          <div class="form-group-inline">
+            <label>Nombre</label>
+            <input type="text" id="u-nombre" placeholder="Nombre del usuario">
+          </div>
+          <div class="form-group-inline">
+            <label>Contraseña</label>
+            <input type="password" id="u-password" placeholder="Contraseña">
+          </div>
+          <div class="form-group-inline">
+            <label>Rol</label>
+            <select id="u-rol">
+              <option value="admin">Admin</option>
+              <option value="empleado">Empleado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveUsuario()">Guardar</button>
+          <button class="btn-cancel" onclick="cancelFormUsuario()">Cancelar</button>
+        </div>
+      </div>
+    </div>
