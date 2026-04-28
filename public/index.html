@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGDB</title>
+  <link rel="icon" type="image/x-icon" href="/img/Logo_SGDB.png">
+ <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <div class="login-logo">
+        <img src="img/Logo_SGDB.png" alt="SGDB Logo">
+      </div>
+
+      <h1>Iniciar Sesión</h1>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="form-group">
+        <label>Código de Finca</label>
+        <input type="text" id="codigo_finca" placeholder="Ingrese el código de la finca">
+      </div>
+
+      <div class="form-group">
+        <label>Usuario</label>
+        <input type="text" id="nombre" placeholder="Ingrese su usuario">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="Ingrese su contraseña">
+      </div>
+
+      <button class="btn-login" id="btn-login">Ingresar</button>
+
+      <a class="login-link">¿Olvidaste tu contraseña?</a>
+
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+
+</body>
+</html>
