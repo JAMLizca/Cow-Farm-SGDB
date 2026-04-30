@@ -1,65 +1,61 @@
-<!-- PANEL SANITARIO-->
-    <div class="content-panel" id="panel-sanitario">
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <div class="card-title">Eventos Sanitarios</div>
-            <div class="card-subtitle">Vacunas, desparasitación y tratamientos</div>
-          </div>
-          <button class="btn-primary" onclick="openFormSanitario()">
-            + Registrar Evento
-          </button>
-        </div>
-        <div id="sanitario-contenido">
-          <!-- Se llena dinámicamente -->
-        </div>
-      </div>
-
-      <!-- Formulario sanitario -->
-      <div class="card" id="form-sanitario-card" style="display:none">
-        <div class="card-title">Registrar Evento Sanitario</div>
-        <div class="form-grid">
-          <div class="form-group-inline">
-            <label>Bovino</label>
-            <select id="s-bovino"></select>
-          </div>
-          <div class="form-group-inline">
-            <label>Tipo de Evento</label>
-            <select id="s-tipo">
-              <option>Vacunación</option>
-              <option>Desparasitación</option>
-              <option>Tratamiento</option>
-              <option>Revisión</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Producto</label>
-            <input type="text" id="s-producto" placeholder="Nombre del producto">
-          </div>
-          <div class="form-group-inline">
-            <label>Dosis</label>
-            <input type="text" id="s-dosis" placeholder="Ej: 5ml">
-          </div>
-          <div class="form-group-inline">
-            <label>Fecha</label>
-            <input type="date" id="s-fecha">
-          </div>
-          <div class="form-group-inline">
-            <label>Próxima Fecha</label>
-            <input type="date" id="s-proxima-fecha">
-          </div>
-          <div class="form-group-inline">
-            <label>Estado</label>
-            <select id="s-estado">
-              <option>Programado</option>
-              <option>Ejecutado</option>
-              <option>Cancelado</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button class="btn-save" onclick="saveSanitario()">Guardar</button>
-          <button class="btn-cancel" onclick="cancelFormSanitario()">Cancelar</button>
-        </div>
-      </div>
+<!-- Tabla sanitario -->
+<div class="card">
+  <div class="section-header">
+    <div>
+      <div class="card-title">Eventos Sanitarios</div>
+      <div class="card-subtitle">Vacunas, desparasitación y tratamientos</div>
     </div>
+    <button class="btn-primary" onclick="openFormSanitario()">
+      + Registrar Evento
+    </button>
+  </div>
+  <div id="sanitario-contenido"></div>
+</div>
+
+<!-- Formulario sanitario -->
+<div class="card" id="form-sanitario-card" style="display:none">
+  <div class="card-title">Registrar Evento Sanitario</div>
+  <div class="form-grid">
+    <div class="form-group-inline">
+      <label>Bovino</label>
+      <select id="s-bovino"></select>
+    </div>
+    <div class="form-group-inline">
+      <label>Tipo de Evento</label>
+      <select id="s-tipo">
+        <option>Vacunación</option>
+        <option>Desparasitación</option>
+        <option>Tratamiento</option>
+        <option>Revisión</option>
+      </select>
+    </div>
+    <div class="form-group-inline">
+      <label>Producto</label>
+      <input type="text" id="s-producto" placeholder="Nombre del producto">
+    </div>
+    <div class="form-group-inline">
+      <label>Dosis</label>
+      <input type="text" id="s-dosis" placeholder="Ej: 5ml">
+    </div>
+    <div class="form-group-inline">
+      <label>Fecha</label>
+      <input type="date" id="s-fecha">
+    </div>
+    <div class="form-group-inline">
+      <label>Próxima Fecha</label>
+      <input type="date" id="s-proxima-fecha">
+    </div>
+    <div class="form-group-inline">
+      <label>Estado</label>
+      <select id="s-estado">
+        <option>Programado</option>
+        <option>Ejecutado</option>
+        <option>Cancelado</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn-save" onclick="saveSanitario()">Guardar</button>
+    <button class="btn-cancel" onclick="cancelFormSanitario()">Cancelar</button>
+  </div>
+</div>
