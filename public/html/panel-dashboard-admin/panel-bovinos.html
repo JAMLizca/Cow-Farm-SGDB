@@ -1,287 +1,140 @@
-  <!-- PANEL BOVINOS-->
-    <div class="content-panel active" id="panel-bovinos">
-
-      <!-- KPIs -->
-      <div class="kpi-grid">
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-toro">0</div>
-            <div class="kpi-label">Toro/Borrego</div>
-          </div>
-          <div class="kpi-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-ternera">0</div>
-            <div class="kpi-label">Terneritas</div>
-          </div>
-          <div class="kpi-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-obs">0</div>
-            <div class="kpi-label">En revisión</div>
-          </div>
-          <div class="kpi-icon yellow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d69e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-trat">0</div>
-            <div class="kpi-label">En Tratamiento</div>
-          </div>
-          <div class="kpi-icon red">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabla bovinos -->
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <div class="card-title">Sistema de Gestión de Bovinos</div>
-            <div class="card-subtitle">Listado de Bovinos</div>
-          </div>
-          <button class="btn-primary" onclick="openFormBovino()">
-            + Registrar Bovino
-          </button>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Identificador</th>
-                <th>Nombre</th>
-                <th>Raza</th>
-                <th>Estado de Salud</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-bovinos"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Formulario bovino -->
-      <div class="card" id="form-bovino-card" style="display:none">
-        <div class="card-title" id="form-bovino-title">Registrar / Editar Bovino</div>
-        <div class="form-grid">
-          <div class="form-group-inline">
-            <label>Número de Identificación (Arete)</label>
-            <input type="text" id="f-arete" placeholder="Ej: BOV-006">
-          </div>
-          <div class="form-group-inline">
-            <label>Nombre</label>
-            <input type="text" id="f-nombre" placeholder="Ej: Luna">
-          </div>
-          <div class="form-group-inline">
-            <label>Sexo</label>
-            <select id="f-sexo">
-              <option value="">Seleccionar sexo</option>
-              <option>Macho</option>
-              <option>Hembra</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Categoría</label>
-            <select id="f-categoria">
-              <option value="">Seleccionar categoría</option>
-              <option>Toro</option>
-              <option>Vaca</option>
-              <option>Ternero</option>
-              <option>Ternera</option>
-              <option>Novillo</option>
-              <option>Novilla</option>
-              <option>Becerro</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Raza</label>
-            <select id="f-raza">
-              <option value="">Seleccionar raza</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Propósito</label>
-            <select id="f-proposito">
-              <option value="">Seleccionar propósito</option>
-              <option>Carne</option>
-              <option>Leche</option>
-              <option>Doble propósito</option>
-              <option>Cría</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Fecha de Nacimiento</label>
-            <input type="date" id="f-fecha">
-          </div>
-          <div class="form-group-inline">
-            <label>Peso Inicial (kg)</label>
-            <input type="number" id="f-peso" placeholder="Ej: 450">
-          </div>
-          <div class="form-group-inline">
-            <label>Estado de Salud</label>
-            <select id="f-estado">
-              <option value="">Seleccionar estado</option>
-              <option>Saludable</option>
-              <option>En observación</option>
-              <option>En tratamiento</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button class="btn-save" onclick="saveBovino()">Guardar</button>
-          <button class="btn-cancel" onclick="cancelFormBovino()">Cancelar</button>
-        </div>
-      </div>
-    </ <!-- PANEL BOVINOS-->
-    <div class="content-panel active" id="panel-bovinos">
-
-      <!-- KPIs -->
-      <div class="kpi-grid">
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-toro">0</div>
-            <div class="kpi-label">Toro/Borrego</div>
-          </div>
-          <div class="kpi-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-ternera">0</div>
-            <div class="kpi-label">Terneritas</div>
-          </div>
-          <div class="kpi-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-obs">0</div>
-            <div class="kpi-label">En revisión</div>
-          </div>
-          <div class="kpi-icon yellow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d69e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div>
-            <div class="kpi-value" id="stat-trat">0</div>
-            <div class="kpi-label">En Tratamiento</div>
-          </div>
-          <div class="kpi-icon red">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabla bovinos -->
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <div class="card-title">Sistema de Gestión de Bovinos</div>
-            <div class="card-subtitle">Listado de Bovinos</div>
-          </div>
-          <button class="btn-primary" onclick="openFormBovino()">
-            + Registrar Bovino
-          </button>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Identificador</th>
-                <th>Nombre</th>
-                <th>Raza</th>
-                <th>Estado de Salud</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-bovinos"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Formulario bovino -->
-      <div class="card" id="form-bovino-card" style="display:none">
-        <div class="card-title" id="form-bovino-title">Registrar / Editar Bovino</div>
-        <div class="form-grid">
-          <div class="form-group-inline">
-            <label>Número de Identificación (Arete)</label>
-            <input type="text" id="f-arete" placeholder="Ej: BOV-006">
-          </div>
-          <div class="form-group-inline">
-            <label>Nombre</label>
-            <input type="text" id="f-nombre" placeholder="Ej: Luna">
-          </div>
-          <div class="form-group-inline">
-            <label>Sexo</label>
-            <select id="f-sexo">
-              <option value="">Seleccionar sexo</option>
-              <option>Macho</option>
-              <option>Hembra</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Categoría</label>
-            <select id="f-categoria">
-              <option value="">Seleccionar categoría</option>
-              <option>Toro</option>
-              <option>Vaca</option>
-              <option>Ternero</option>
-              <option>Ternera</option>
-              <option>Novillo</option>
-              <option>Novilla</option>
-              <option>Becerro</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Raza</label>
-            <select id="f-raza">
-              <option value="">Seleccionar raza</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Propósito</label>
-            <select id="f-proposito">
-              <option value="">Seleccionar propósito</option>
-              <option>Carne</option>
-              <option>Leche</option>
-              <option>Doble propósito</option>
-              <option>Cría</option>
-            </select>
-          </div>
-          <div class="form-group-inline">
-            <label>Fecha de Nacimiento</label>
-            <input type="date" id="f-fecha">
-          </div>
-          <div class="form-group-inline">
-            <label>Peso Inicial (kg)</label>
-            <input type="number" id="f-peso" placeholder="Ej: 450">
-          </div>
-          <div class="form-group-inline">
-            <label>Estado de Salud</label>
-            <select id="f-estado">
-              <option value="">Seleccionar estado</option>
-              <option>Saludable</option>
-              <option>En observación</option>
-              <option>En tratamiento</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button class="btn-save" onclick="saveBovino()">Guardar</button>
-          <button class="btn-cancel" onclick="cancelFormBovino()">Cancelar</button>
-        </div>
-      </div>
+<!-- KPIs -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div>
+      <div class="kpi-value" id="stat-toro">0</div>
+      <div class="kpi-label">Toro/Borreg</div>
     </div>
+    <div class="kpi-icon green">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div>
+      <div class="kpi-value" id="stat-ternera">0</div>
+      <div class="kpi-label">Ternitas</div>
+    </div>
+    <div class="kpi-icon green">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div>
+      <div class="kpi-value" id="stat-obs">0</div>
+      <div class="kpi-label">En revisión</div>
+    </div>
+    <div class="kpi-icon yellow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d69e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    </div>
+  </div>
+  <div class="kpi-card">
+    <div>
+      <div class="kpi-value" id="stat-trat">0</div>
+      <div class="kpi-label">En Tratamiento</div>
+    </div>
+    <div class="kpi-icon red">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla bovinos -->
+<div class="card">
+  <div class="section-header">
+    <div>
+      <div class="card-title">Sistema de Gestión de Bovinos</div>
+      <div class="card-subtitle">Listado de Bovinos</div>
+    </div>
+    <button class="btn-primary" onclick="openFormBovino()">
+      + Registrar Bovino
+    </button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Identificador</th>
+          <th>Nombre</th>
+          <th>Raza</th>
+          <th>Estado de Salud</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-bovinos"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Formulario bovino -->
+<div class="card" id="form-bovino-card" style="display:none">
+  <div class="card-title" id="form-bovino-title">Registrar Bovino</div>
+  <div class="form-grid">
+    <div class="form-group-inline">
+      <label>Número de Identificación (Arete)</label>
+      <input type="text" id="f-arete" placeholder="Ej: BOV-006">
+    </div>
+    <div class="form-group-inline">
+      <label>Nombre</label>
+      <input type="text" id="f-nombre" placeholder="Ej: Luna">
+    </div>
+    <div class="form-group-inline">
+      <label>Sexo</label>
+      <select id="f-sexo">
+        <option value="">Seleccionar sexo</option>
+        <option>Macho</option>
+        <option>Hembra</option>
+      </select>
+    </div>
+    <div class="form-group-inline">
+      <label>Categoría</label>
+      <select id="f-categoria">
+        <option value="">Seleccionar categoría</option>
+        <option>Toro</option>
+        <option>Vaca</option>
+        <option>Ternero</option>
+        <option>Ternera</option>
+        <option>Novillo</option>
+        <option>Novilla</option>
+        <option>Becerro</option>
+      </select>
+    </div>
+    <div class="form-group-inline">
+      <label>Raza</label>
+      <select id="f-raza">
+        <option value="">Seleccionar raza</option>
+      </select>
+    </div>
+    <div class="form-group-inline">
+      <label>Propósito</label>
+      <select id="f-proposito">
+        <option value="">Seleccionar propósito</option>
+        <option>Carne</option>
+        <option>Leche</option>
+        <option>Doble propósito</option>
+        <option>Cría</option>
+      </select>
+    </div>
+    <div class="form-group-inline">
+      <label>Fecha de Nacimiento</label>
+      <input type="date" id="f-fecha">
+    </div>
+    <div class="form-group-inline">
+      <label>Peso Inicial (kg)</label>
+      <input type="number" id="f-peso" placeholder="Ej: 450">
+    </div>
+    <div class="form-group-inline">
+      <label>Estado de Salud</label>
+      <select id="f-estado">
+        <option value="">Seleccionar estado</option>
+        <option>Saludable</option>
+        <option>En observación</option>
+        <option>En tratamiento</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn-save" onclick="saveBovino()">Guardar</button>
+    <button class="btn-cancel" onclick="cancelFormBovino()">Cancelar</button>
+  </div>
+</div>
