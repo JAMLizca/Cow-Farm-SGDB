@@ -1,3 +1,29 @@
+// ── Cargar panel dinámicamente ──
+let panelActual = '';
+
+async function showPanel(name) {
+    if (panelActual === name) return;
+    panelActual = name;
+
+    // Marcar sidebar
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    document.getElementById('menu-' + name).classList.add('active');
+
+    // Mostrar loading
+    const container = document.getElementById('panel-container');
+    container.innerHTML = '<div class="loading-panel">Cargando...</div>';
+
+    // Cargar HTML del panel
+    const res  = await fetch(`html/panel-dashboard-admin/panel-${name}.html`);
+    const html = await res.text();
+    container.innerHTML = html;
+
+    // Ejecutar función del panel
+    if (name === 'bovinos')   cargarBovinos();
+    if (name === 'usuarios')  cargarUsuarios();
+    if (name === 'sanitario') cargarSanitario();
+    if (name === 'reportes')  cargarReportes();
+}
 // Verificar sesión
 const { usuario, finca } = verificarSesion();
 
@@ -16,17 +42,7 @@ let chartEstado   = null;
 let chartPeso     = null;
 let chartSan      = null;
 
-// Mostrar panel
-function showPanel(name) {
-    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-    document.getElementById('menu-' + name).classList.add('active');
-    if (name === 'bovinos')   cargarBovinos();
-    if (name === 'usuarios')  cargarUsuarios();
-    if (name === 'sanitario') cargarSanitario();
-    if (name === 'reportes')  cargarReportes();
-}
+
 
 // Toast
 let toastTimer;
@@ -482,5 +498,5 @@ async function confirmarEliminar() {
     closeModal('modal-eliminar');
 }
 
-// Cargar al inicio
-cargarBovinos();
+// ── Cargar panel inicial ──
+showPanel('bovinos');
