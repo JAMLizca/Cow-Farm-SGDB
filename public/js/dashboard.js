@@ -1,49 +1,4 @@
-// ── Cargar panel dinámicamente ──
-let panelActual = '';
-
-async function showPanel(name) {
-    panelActual = name;
-
-    // Sidebar activo
-    document.querySelectorAll('.sidebar-item')
-        .forEach(i => i.classList.remove('active'));
-
-    document.getElementById(`menu-${name}`)
-        .classList.add('active');
-
-    // Contenedor correcto
-    const container = document.getElementById('panel-container');
-    container.innerHTML = '<div class="loading-panel">Cargando...</div>';
-
-    try {
-        const res  = await fetch(`html/panel-dashboard-admin/panel-${name}.html`);
-        const html = await res.text();
-        container.innerHTML = html;
-    } catch (e) {
-        container.innerHTML = '<div class="loading-panel">Error al cargar el panel</div>';
-        return;
-    }
-
-    // Cargar lógica
-    // Ejecutar lógica solo si el HTML cargó bien
-if (name === 'bovinos' && document.getElementById('tabla-bovinos')) {
-    cargarBovinos();
-}
-
-if (name === 'usuarios' && document.getElementById('tabla-usuarios')) {
-    cargarUsuarios();
-}
-
-if (name === 'sanitario' && document.getElementById('sanitario-contenido')) {
-    cargarSanitario();
-}
-
-if (name === 'reportes' && document.getElementById('rep-peso')) {
-    cargarReportes();
-}
-}
-
-// Verificar sesión
+// Verificar sesión 
 const { usuario, finca } = verificarSesion();
 
 // ── Info navbar y sidebar ──
@@ -51,7 +6,7 @@ document.getElementById('navbar-user') && (document.getElementById('navbar-user'
 document.getElementById('user-name').textContent   = usuario.nombre;
 document.getElementById('user-avatar').textContent = usuario.nombre.charAt(0).toUpperCase();
 
-// Variables globales
+// Var globales
 let editBovinoId  = null;
 let editUsuarioId = null;
 let deleteTarget  = null;
@@ -61,9 +16,19 @@ let chartEstado   = null;
 let chartPeso     = null;
 let chartSan      = null;
 
+// Mostrar panel
+function showPanel(name) {
+    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    document.getElementById('menu-' + name).classList.add('active');
+    if (name === 'bovinos')   cargarBovinos();
+    if (name === 'usuarios')  cargarUsuarios();
+    if (name === 'sanitario') cargarSanitario();
+    if (name === 'reportes')  cargarReportes();
+}
 
-
-// Toast
+// Toast 
 let toastTimer;
 function showToast(msg, type = '') {
     const t = document.getElementById('toast');
@@ -87,7 +52,8 @@ function badgeEstado(estado) {
     return `<span class="badge badge-yellow">${estado}</span>`;
 }
 
-// BOVINOS
+//  BOVINOS
+
 async function cargarBovinos() {
     const bovinos = await apiGet('bovinos', { finca_id: finca.id });
 
@@ -204,7 +170,9 @@ function cancelFormBovino() {
     editBovinoId = null;
 }
 
-// USUARIOS
+
+// USER
+
 async function cargarUsuarios() {
     const usuarios = await apiGet('usuarios', { finca_id: finca.id });
     const tbody    = document.getElementById('tabla-usuarios');
@@ -280,7 +248,9 @@ function cancelFormUsuario() {
     editUsuarioId = null;
 }
 
-// SANOTARIO
+
+//  SANATARIO
+
 async function cargarSanitario() {
     const eventos   = await apiGet('eventos-sanitarios', { finca_id: finca.id });
     const contenido = document.getElementById('sanitario-contenido');
@@ -359,7 +329,9 @@ function cancelFormSanitario() {
     document.getElementById('form-sanitario-card').style.display = 'none';
 }
 
-// REPORTES
+
+//  REPORTES
+
 async function cargarReportes() {
     const bovinos = await apiGet('bovinos', { finca_id: finca.id });
     const eventos = await apiGet('eventos-sanitarios', { finca_id: finca.id });
@@ -493,7 +465,9 @@ async function cargarReportes() {
     });
 }
 
-// ELIMINAR
+
+// DELETE
+
 function prepDelete(id, type) {
     deleteTarget = id;
     deleteType   = type;
@@ -517,6 +491,5 @@ async function confirmarEliminar() {
     closeModal('modal-eliminar');
 }
 
-
-// ── Cargar panel inicial ──
-showPanel('bovinos');
+// Cargar a inicio 
+cargarBovinos();

@@ -136,7 +136,7 @@
       object-fit: cover;
     }
 
-  
+    
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -250,3 +250,4 @@
       color: var(--texto-suave);
       font-size: 14px;
     }
+  

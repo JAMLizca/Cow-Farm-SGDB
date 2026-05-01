@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cow Farm — DA</title>
+  <title>Cow Farm DA</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dashboard_admin.css">
 </head>
@@ -20,22 +20,27 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-menu">
-      <div class="sidebar-item active" data-panel="bovinos" id="menu-bovinos">
+
+      <div class="sidebar-item active" onclick="showPanel('bovinos')" id="menu-bovinos">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
         Bovinos
       </div>
-      <div class="sidebar-item" data-panel="usuarios" id="menu-usuarios">
+
+      <div class="sidebar-item" onclick="showPanel('usuarios')" id="menu-usuarios">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Usuarios
       </div>
-      <div class="sidebar-item" data-panel="sanitario" id="menu-sanitario">
+
+      <div class="sidebar-item" onclick="showPanel('sanitario')" id="menu-sanitario">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/></svg>
         Sanitario
       </div>
-      <div class="sidebar-item" data-panel="reportes" id="menu-reportes">
+
+      <div class="sidebar-item" onclick="showPanel('reportes')" id="menu-reportes">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
         Reportes
       </div>
+
     </div>
     <div class="sidebar-bottom">
       <div class="user-info">
@@ -45,7 +50,7 @@
           <div class="user-name" id="user-name"></div>
         </div>
       </div>
-      <button class="btn-logout" id="btn-logout">
+      <button class="btn-logout" onclick="cerrarSesion()">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Cerrar Sesión
       </button>
@@ -54,9 +59,353 @@
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
-    <div id="panel-container">
-      <div class="loading-panel">Cargando...</div>
+
+    <!-- PANEL BOINO-->
+  
+    <div class="content-panel active" id="panel-bovinos">
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="stat-toro">0</div>
+            <div class="kpi-label">Toro/Borrego</div>
+          </div>
+          <div class="kpi-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="stat-ternera">0</div>
+            <div class="kpi-label">Ternera</div>
+          </div>
+          <div class="kpi-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="stat-obs">0</div>
+            <div class="kpi-label">En revisión</div>
+          </div>
+          <div class="kpi-icon yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d69e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="stat-trat">0</div>
+            <div class="kpi-label">En Tratamiento</div>
+          </div>
+          <div class="kpi-icon red">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla bovinos -->
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="card-title">Sistema de Gestión de Bovinos</div>
+            <div class="card-subtitle">Listado de Bovinos</div>
+          </div>
+          <button class="btn-primary" onclick="openFormBovino()">
+            + Registrar Bovino
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Identificador</th>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Estado de Salud</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-bovinos"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Formulario bovino -->
+      <div class="card" id="form-bovino-card" style="display:none">
+        <div class="card-title" id="form-bovino-title">Registrar / Editar Bovino</div>
+        <div class="form-grid">
+          <div class="form-group-inline">
+            <label>Número de Identificación (Arete)</label>
+            <input type="text" id="f-arete" placeholder="Ej: BOV-006">
+          </div>
+          <div class="form-group-inline">
+            <label>Nombre</label>
+            <input type="text" id="f-nombre" placeholder="Ej: Luna">
+          </div>
+          <div class="form-group-inline">
+            <label>Sexo</label>
+            <select id="f-sexo">
+              <option value="">Seleccionar sexo</option>
+              <option>Macho</option>
+              <option>Hembra</option>
+            </select>
+          </div>
+          <div class="form-group-inline">
+            <label>Categoría</label>
+            <select id="f-categoria">
+              <option value="">Seleccionar categoría</option>
+              <option>Toro</option>
+              <option>Vaca</option>
+              <option>Ternero</option>
+              <option>Ternera</option>
+              <option>Novillo</option>
+              <option>Novilla</option>
+              <option>Becerro</option>
+            </select>
+          </div>
+          <div class="form-group-inline">
+            <label>Raza</label>
+            <select id="f-raza">
+              <option value="">Seleccionar raza</option>
+            </select>
+          </div>
+          <div class="form-group-inline">
+            <label>Propósito</label>
+            <select id="f-proposito">
+              <option value="">Seleccionar propósito</option>
+              <option>Carne</option>
+              <option>Leche</option>
+              <option>Doble propósito</option>
+              <option>Cría</option>
+            </select>
+          </div>
+          <div class="form-group-inline">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" id="f-fecha">
+          </div>
+          <div class="form-group-inline">
+            <label>Peso Inicial (kg)</label>
+            <input type="number" id="f-peso" placeholder="Ej: 450">
+          </div>
+          <div class="form-group-inline">
+            <label>Estado de Salud</label>
+            <select id="f-estado">
+              <option value="">Seleccionar estado</option>
+              <option>Saludable</option>
+              <option>En observación</option>
+              <option>En tratamiento</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveBovino()">Guardar</button>
+          <button class="btn-cancel" onclick="cancelFormBovino()">Cancelar</button>
+        </div>
+      </div>
     </div>
+
+    <!-- PANEL USUARIOS -->
+    <div class="content-panel" id="panel-usuarios">
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="card-title">Gestión de Usuarios</div>
+            <div class="card-subtitle">Empleados y administradores</div>
+          </div>
+          <button class="btn-primary" onclick="openFormUsuario()">
+            + Agregar Usuario
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Formulario usuario -->
+      <div class="card" id="form-usuario-card" style="display:none">
+        <div class="card-title" id="form-usuario-title">Agregar Usuario</div>
+        <div class="form-grid">
+          <div class="form-group-inline">
+            <label>Nombre</label>
+            <input type="text" id="u-nombre" placeholder="Nombre del usuario">
+          </div>
+          <div class="form-group-inline">
+            <label>Contraseña</label>
+            <input type="password" id="u-password" placeholder="Contraseña">
+          </div>
+          <div class="form-group-inline">
+            <label>Rol</label>
+            <select id="u-rol">
+              <option value="admin">Admin</option>
+              <option value="empleado">Empleado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveUsuario()">Guardar</button>
+          <button class="btn-cancel" onclick="cancelFormUsuario()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+  
+    <!-- PANEL SANITARIO -->
+    <div class="content-panel" id="panel-sanitario">
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="card-title">Eventos Sanitarios</div>
+            <div class="card-subtitle">Vacunas, desparasitación y tratamientos</div>
+          </div>
+          <button class="btn-primary" onclick="openFormSanitario()">
+            + Registrar Evento
+          </button>
+        </div>
+        <div id="sanitario-contenido">
+          <!-- Se llena danámicamente -->
+        </div>
+      </div>
+
+      <!-- Formulario sanitario -->
+      <div class="card" id="form-sanitario-card" style="display:none">
+        <div class="card-title">Registrar Evento Sanitario</div>
+        <div class="form-grid">
+          <div class="form-group-inline">
+            <label>Bovino</label>
+            <select id="s-bovino"></select>
+          </div>
+          <div class="form-group-inline">
+            <label>Tipo de Evento</label>
+            <select id="s-tipo">
+              <option>Vacunación</option>
+              <option>Desparasitación</option>
+              <option>Tratamiento</option>
+              <option>Revisión</option>
+            </select>
+          </div>
+          <div class="form-group-inline">
+            <label>Producto</label>
+            <input type="text" id="s-producto" placeholder="Nombre del producto">
+          </div>
+          <div class="form-group-inline">
+            <label>Dosis</label>
+            <input type="text" id="s-dosis" placeholder="Ej: 5ml">
+          </div>
+          <div class="form-group-inline">
+            <label>Fecha</label>
+            <input type="date" id="s-fecha">
+          </div>
+          <div class="form-group-inline">
+            <label>Próxima Fecha</label>
+            <input type="date" id="s-proxima-fecha">
+          </div>
+          <div class="form-group-inline">
+            <label>Estado</label>
+            <select id="s-estado">
+              <option>Programado</option>
+              <option>Ejecutado</option>
+              <option>Cancelado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveSanitario()">Guardar</button>
+          <button class="btn-cancel" onclick="cancelFormSanitario()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL REPORTES -->
+    <div class="content-panel" id="panel-reportes">
+
+      <!-- KPIs reportes -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="rep-leche">0 L</div>
+            <div class="kpi-label">Producción hoy</div>
+          </div>
+          <div class="kpi-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l1 8H7L8 2z"/><path d="M7 10c0 5 2 9 5 9s5-4 5-9"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="rep-peso">0 kg</div>
+            <div class="kpi-label">Peso promedio</div>
+          </div>
+          <div class="kpi-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2 2 0 0 0-1.905 1.46L2 17h20l-2.595-7.54A2 2 0 0 0 17.5 8z"/><path d="M12 8v9"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="rep-vacunas">0</div>
+            <div class="kpi-label">Vacunas este mes</div>
+          </div>
+          <div class="kpi-icon yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d69e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/></svg>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div>
+            <div class="kpi-value" id="rep-alertas">0</div>
+            <div class="kpi-label">Alertas activas</div>
+          </div>
+          <div class="kpi-icon red">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila 1 -->
+      <div class="rep-row-1">
+        <div class="rep-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+            <div class="rep-card-title">Producción de Leche — Últimos 7 días</div>
+            <span class="rep-total">Total: <strong id="rep-total-leche">0 L</strong></span>
+          </div>
+          <div class="rep-card-sub">Litros por día</div>
+          <canvas id="chart-leche" height="120"></canvas>
+        </div>
+        <div class="rep-card" style="display:flex;flex-direction:column;align-items:center;">
+          <div class="rep-card-title" style="width:100%">Estado del Hato</div>
+          <div class="hato-number" id="hato-total">0</div>
+          <div class="hato-label">animales</div>
+          <canvas id="chart-estado" width="160" height="160"></canvas>
+          <div id="estado-leyenda" style="width:100%;margin-top:12px;display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+      </div>
+
+      <!-- Fila 2 -->
+      <div class="rep-row-2">
+        <div class="rep-card">
+          <div class="rep-card-title">Peso Promedio por Raza</div>
+          <div class="rep-card-sub">Kilogramos</div>
+          <canvas id="chart-peso" height="150"></canvas>
+        </div>
+        <div class="rep-card">
+          <div class="rep-card-title">Eventos Sanitarios</div>
+          <div class="rep-card-sub">Últimos 30 días</div>
+          <canvas id="chart-sanitario-rep" height="150"></canvas>
+        </div>
+      </div>
+
+    </div>
+
   </main>
 
   <!-- MODAL ELIMINAR -->
@@ -67,8 +416,8 @@
         ¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.
       </p>
       <div class="modal-actions">
-        <button class="btn-cancel" id="btn-cancelar-eliminar">Cancelar</button>
-        <button class="btn-delete" id="btn-confirmar-eliminar">Eliminar</button>
+        <button class="btn-cancel" onclick="closeModal('modal-eliminar')">Cancelar</button>
+        <button class="btn-delete" onclick="confirmarEliminar()">Eliminar</button>
       </div>
     </div>
   </div>
