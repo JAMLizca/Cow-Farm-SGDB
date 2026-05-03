@@ -48,7 +48,7 @@ document.getElementById('btn-login').addEventListener('click', async () => {
     }
 });
 
-// Permitir login con Enter
+// Permitir login con Eter
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         document.getElementById('btn-login').click();

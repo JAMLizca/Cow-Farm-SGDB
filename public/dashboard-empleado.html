@@ -3,48 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGDB — Dashboard Empleado</title>
+  <title>Cow Farm - Empleado</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard_empleado.css">
+  <link rel="icon" type="image/x-icon" href="img/Logo_SGDB.png">
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="navbar-brand-wrap">
-      <span class="navbar-brand-top">Dashboard Del Empleado</span>
-      <span class="navbar-brand-main">Dashboard Empleado</span>
+    <div class="navbar-brand">Dashboard Del Empleado</div>
+    <div class="nav-logo-box">
+      <img src="img/Logo_SGDB.png" alt="Logo">
     </div>
-    <div class="nav-avatar-circle" id="nav-avatar"></div>
   </nav>
 
   <!-- SIDEBAR -->
-  <aside class="sidebar sidebar-empleado">
+  <aside class="sidebar">
     <div class="sidebar-menu">
 
-      <div class="sidebar-item active" data-panel="bovinos-emp" id="menu-bovinos-emp">
+      <div class="sidebar-item active" onclick="showPanel('bovinos')" id="menu-bovinos">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
         Bovinos
       </div>
 
-      <div class="sidebar-item" data-panel="produccion" id="menu-produccion">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l1 8H7L8 2z"/><path d="M7 10c0 5 2 9 5 9s5-4 5-9"/></svg>
+      <div class="sidebar-item" onclick="showPanel('produccion')" id="menu-produccion">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
         Producción
       </div>
 
-      <div class="sidebar-item" data-panel="sanitario-emp" id="menu-sanitario-emp">
+      <div class="sidebar-item" onclick="showPanel('sanitario')" id="menu-sanitario">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/></svg>
         Sanitario
       </div>
 
-      <div class="sidebar-item" data-panel="pesajes" id="menu-pesajes">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><path d="M4 10l-2 8h6l-4-8"/><path d="M20 10l2 8h-6l4-8"/><line x1="12" y1="6" x2="4" y2="10"/><line x1="12" y1="6" x2="20" y2="10"/></svg>
+      <div class="sidebar-item" onclick="showPanel('pesajes')" id="menu-pesajes">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a1 1 0 0 1 .5.13l7 4A1 1 0 0 1 20 8v8a1 1 0 0 1-.5.87l-7 4a1 1 0 0 1-1 0l-7-4A1 1 0 0 1 4 16V8a1 1 0 0 1 .5-.87l7-4A1 1 0 0 1 12 3z"/><polyline points="12 22 12 12"/><path d="m20 8-8 4-8-4"/></svg>
         Pesajes
       </div>
 
     </div>
     <div class="sidebar-bottom">
       <div class="user-info">
-        <div class="user-avatar user-avatar-emp" id="user-avatar"></div>
+        <div class="user-avatar" id="user-avatar"></div>
         <div class="user-details">
           <div class="user-role">Usuario</div>
           <div class="user-name" id="user-name"></div>
@@ -60,16 +61,15 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
 
-    <!-- ══════════════════════════════════════ -->
-    <!-- PANEL BOVINOS                          -->
-    <!-- ══════════════════════════════════════ -->
-    <div class="content-panel active" id="panel-bovinos-emp">
+    <!--PANEL BOVINOS -->
+    <div class="content-panel active" id="panel-bovinos">
 
-      <div class="kpi-grid-3">
+      <!-- KPIs -->
+      <div class="kpi-grid">
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="emp-stat-toro">0</div>
-            <div class="kpi-label">Toros/Borreg</div>
+            <div class="kpi-value" id="stat-toros">0</div>
+            <div class="kpi-label">Toro</div>
           </div>
           <div class="kpi-icon green">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
@@ -77,8 +77,8 @@
         </div>
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="emp-stat-ternera">0</div>
-            <div class="kpi-label">Ternitas</div>
+            <div class="kpi-value" id="stat-ternitas">0</div>
+            <div class="kpi-label">Ternera</div>
           </div>
           <div class="kpi-icon green">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
@@ -86,7 +86,7 @@
         </div>
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="emp-stat-obs">0</div>
+            <div class="kpi-value" id="stat-revision">0</div>
             <div class="kpi-label">En revisión</div>
           </div>
           <div class="kpi-icon yellow">
@@ -95,6 +95,7 @@
         </div>
       </div>
 
+      <!-- Tabla bovinos (solo lectura) -->
       <div class="card">
         <div class="section-header">
           <div>
@@ -103,7 +104,7 @@
           </div>
         </div>
         <div class="table-wrap">
-          <table class="tabla-emp">
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
@@ -114,50 +115,52 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            <tbody id="tabla-bovinos-emp"></tbody>
+            <tbody id="tabla-bovinos"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════ -->
-    <!-- PANEL PRODUCCION                       -->
-    <!-- ══════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════
+         PANEL PRODUCCIÓN
+    ══════════════════════════════════════ -->
     <div class="content-panel" id="panel-produccion">
 
-      <div class="kpi-grid-2">
+      <!-- KPIs producción -->
+      <div class="kpi-grid kpi-grid-2">
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="prod-hoy">0.0 L</div>
+            <div class="kpi-value" id="stat-prod-hoy">0.0 L</div>
             <div class="kpi-label">Producción hoy</div>
           </div>
           <div class="kpi-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l1 8H7L8 2z"/><path d="M7 10c0 5 2 9 5 9s5-4 5-9"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
           </div>
         </div>
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="prod-total">0.0 L</div>
+            <div class="kpi-value" id="stat-prod-total">0.0 L</div>
             <div class="kpi-label">Producción total</div>
           </div>
-          <div class="kpi-icon blue">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l1 8H7L8 2z"/><path d="M7 10c0 5 2 9 5 9s5-4 5-9"/></svg>
+          <div class="kpi-icon" style="background:#ebf8ff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
           </div>
         </div>
       </div>
 
+      <!-- Tabla producción -->
       <div class="card">
         <div class="section-header">
           <div>
             <div class="card-title">Producción de Leche</div>
             <div class="card-subtitle">Mis registros de producción diaria</div>
           </div>
-          <button class="btn-primary" onclick="openModal('modal-produccion');cargarBovinosModal('prod-bovino')">
+          <button class="btn-primary" onclick="openFormProduccion()">
             + Registrar Producción
           </button>
         </div>
         <div class="table-wrap">
-          <table class="tabla-emp">
+          <table>
             <thead>
               <tr>
                 <th>Fecha</th>
@@ -173,15 +176,16 @@
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════ -->
-    <!-- PANEL SANITARIO                        -->
-    <!-- ══════════════════════════════════════ -->
-    <div class="content-panel" id="panel-sanitario-emp">
+    <!-- ══════════════════════════════════════
+         PANEL SANITARIO
+    ══════════════════════════════════════ -->
+    <div class="content-panel" id="panel-sanitario">
 
-      <div class="kpi-grid-2">
+      <!-- KPIs sanitario -->
+      <div class="kpi-grid kpi-grid-2">
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="san-pendientes">0</div>
+            <div class="kpi-value" id="stat-san-pendientes">0</div>
             <div class="kpi-label">Eventos pendientes</div>
           </div>
           <div class="kpi-icon yellow">
@@ -190,7 +194,7 @@
         </div>
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="san-completados">0</div>
+            <div class="kpi-value" id="stat-san-completados">0</div>
             <div class="kpi-label">Eventos completados</div>
           </div>
           <div class="kpi-icon green">
@@ -199,6 +203,7 @@
         </div>
       </div>
 
+      <!-- Tabla sanitario -->
       <div class="card">
         <div class="section-header">
           <div>
@@ -207,7 +212,7 @@
           </div>
         </div>
         <div class="table-wrap">
-          <table class="tabla-emp">
+          <table>
             <thead>
               <tr>
                 <th>Tipo</th>
@@ -219,33 +224,34 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            <tbody id="tabla-sanitario-emp"></tbody>
+            <tbody id="tabla-sanitario"></tbody>
           </table>
         </div>
-        <div class="nota-info">
+        <div class="alert alert-info" style="margin-top:16px;margin-bottom:0;">
           <strong>Nota:</strong> Solo puedes marcar como completados los eventos programados por el administrador. No puedes crear ni eliminar eventos sanitarios.
         </div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════ -->
-    <!-- PANEL PESAJES                          -->
-    <!-- ══════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════
+         PANEL PESAJES
+    ══════════════════════════════════════ -->
     <div class="content-panel" id="panel-pesajes">
 
-      <div class="kpi-grid-2">
+      <!-- KPIs pesajes -->
+      <div class="kpi-grid kpi-grid-2">
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="pes-ultimo">0 kg</div>
+            <div class="kpi-value" id="stat-ultimo-pesaje">— kg</div>
             <div class="kpi-label">Último pesaje registrado</div>
           </div>
-          <div class="kpi-icon blue">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><path d="M4 10l-2 8h6l-4-8"/><path d="M20 10l2 8h-6l4-8"/><line x1="12" y1="6" x2="4" y2="10"/><line x1="12" y1="6" x2="20" y2="10"/></svg>
+          <div class="kpi-icon" style="background:#ebf8ff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3182ce" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a1 1 0 0 1 .5.13l7 4A1 1 0 0 1 20 8v8a1 1 0 0 1-.5.87l-7 4a1 1 0 0 1-1 0l-7-4A1 1 0 0 1 4 16V8a1 1 0 0 1 .5-.87l7-4A1 1 0 0 1 12 3z"/></svg>
           </div>
         </div>
         <div class="kpi-card">
           <div>
-            <div class="kpi-value" id="pes-promedio">0 kg</div>
+            <div class="kpi-value" id="stat-peso-promedio">— kg</div>
             <div class="kpi-label">Peso promedio</div>
           </div>
           <div class="kpi-icon green">
@@ -254,29 +260,33 @@
         </div>
       </div>
 
+      <!-- Tabla pesajes -->
       <div class="card">
         <div class="section-header">
           <div>
             <div class="card-title">Historial de Pesajes</div>
             <div class="card-subtitle">Registros de peso de los bovinos</div>
           </div>
-          <button class="btn-primary" onclick="openModal('modal-pesaje');cargarBovinosModal('pesaje-bovino')">
+          <button class="btn-primary" onclick="openFormPesaje()">
             + Registrar Pesaje
           </button>
         </div>
-        <div class="filtro-wrap">
-          <label>Filtrar por bovino</label>
+
+        <!-- Filtro por bovino -->
+        <div class="form-group-inline" style="max-width:340px;margin-bottom:20px;">
+          <label style="font-size:13px;font-weight:600;margin-bottom:6px;display:block;">Filtrar por bovino</label>
           <select id="filtro-bovino-pesaje" onchange="filtrarPesajes()">
             <option value="">Todos los bovinos</option>
           </select>
         </div>
+
         <div class="table-wrap">
-          <table class="tabla-emp">
+          <table>
             <thead>
               <tr>
                 <th>Fecha</th>
                 <th>Bovino</th>
-                <th>Peso (KG)</th>
+                <th>Peso (kg)</th>
                 <th>Registrado por</th>
               </tr>
             </thead>
@@ -288,32 +298,69 @@
 
   </main>
 
-  <!-- MODAL DETALLE BOVINO -->
-  <div class="modal-overlay" id="modal-detalle">
+  <!-- ══════════════════════════════════════
+       MODAL DETALLE BOVINO
+  ══════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-detalle-bovino">
     <div class="modal">
-      <div class="modal-title">Detalle del Bovino</div>
-      <div class="detalle-grid" id="detalle-content"></div>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal('modal-detalle')">Cerrar</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div class="modal-title">Detalle del Bovino</div>
+        <button onclick="closeModal('modal-detalle-bovino')" style="background:none;border:1.5px solid var(--gris-borde);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:16px;color:var(--texto-suave);">✕</button>
+      </div>
+      <div class="detalle-grid">
+        <div class="detalle-item">
+          <div class="detalle-label">Identificador</div>
+          <div class="detalle-value" id="det-arete">—</div>
+        </div>
+        <div class="detalle-item">
+          <div class="detalle-label">Nombre</div>
+          <div class="detalle-value" id="det-nombre">—</div>
+        </div>
+        <div class="detalle-item">
+          <div class="detalle-label">Raza</div>
+          <div class="detalle-value" id="det-raza">—</div>
+        </div>
+        <div class="detalle-item">
+          <div class="detalle-label">Sexo</div>
+          <div class="detalle-value" id="det-sexo">—</div>
+        </div>
+        <div class="detalle-item">
+          <div class="detalle-label">Fecha de Nacimiento</div>
+          <div class="detalle-value" id="det-fecha">—</div>
+        </div>
+        <div class="detalle-item">
+          <div class="detalle-label">Peso Actual</div>
+          <div class="detalle-value" id="det-peso">—</div>
+        </div>
+        <div class="detalle-item" style="grid-column:1/-1;">
+          <div class="detalle-label">Estado de Salud</div>
+          <div id="det-estado">—</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL REGISTRAR PRODUCCION -->
+  <!-- ══════════════════════════════════════
+       MODAL REGISTRAR PRODUCCIÓN
+  ══════════════════════════════════════ -->
   <div class="modal-overlay" id="modal-produccion">
     <div class="modal">
-      <div class="modal-title">Registrar Producción de Leche</div>
-      <div class="modal-field">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div class="modal-title">Registrar Producción de Leche</div>
+        <button onclick="closeModal('modal-produccion')" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--texto-suave);">✕</button>
+      </div>
+
+      <div class="form-group-inline" style="margin-bottom:16px;">
         <label>Bovino</label>
         <select id="prod-bovino">
           <option value="">Seleccionar bovino</option>
         </select>
       </div>
-      <div class="modal-field">
+      <div class="form-group-inline" style="margin-bottom:16px;">
         <label>Litros producidos</label>
         <input type="number" id="prod-litros" placeholder="0.0" step="0.1" min="0">
       </div>
-      <div class="modal-field">
+      <div class="form-group-inline" style="margin-bottom:16px;">
         <label>Turno</label>
         <select id="prod-turno">
           <option value="">Seleccionar turno</option>
@@ -322,35 +369,47 @@
           <option>Noche</option>
         </select>
       </div>
+
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal('modal-produccion')">Cancelar</button>
-        <button class="btn-save" onclick="saveProduccion()">Registrar</button>
+        <button class="btn-save" onclick="saveProduccion()">Guardar</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL REGISTRAR PESAJE -->
+  <!-- ══════════════════════════════════════
+       MODAL REGISTRAR PESAJE
+  ══════════════════════════════════════ -->
   <div class="modal-overlay" id="modal-pesaje">
     <div class="modal">
-      <div class="modal-title">Registrar Pesaje</div>
-      <div class="modal-field">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div class="modal-title">Registrar Pesaje</div>
+        <button onclick="closeModal('modal-pesaje')" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--texto-suave);">✕</button>
+      </div>
+
+      <div class="form-group-inline" style="margin-bottom:16px;">
         <label>Bovino</label>
         <select id="pesaje-bovino">
           <option value="">Seleccionar bovino</option>
         </select>
       </div>
-      <div class="modal-field">
+      <div class="form-group-inline" style="margin-bottom:16px;">
         <label>Peso (kg)</label>
-        <input type="number" id="pesaje-peso" placeholder="0.0" step="0.1" min="0">
+        <input type="number" id="pesaje-peso" placeholder="Ej: 450" step="0.1" min="0">
       </div>
+      <div class="form-group-inline" style="margin-bottom:16px;">
+        <label>Fecha</label>
+        <input type="date" id="pesaje-fecha">
+      </div>
+
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal('modal-pesaje')">Cancelar</button>
-        <button class="btn-save" onclick="savePesaje()">Registrar</button>
+        <button class="btn-save" onclick="savePesaje()">Guardar</button>
       </div>
     </div>
   </div>
 
-  <!-- TOAST -->
+  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script src="js/api.js"></script>
