@@ -153,16 +153,22 @@ async function saveBovino() {
         return;
     }
 
+    let response;
     if (editBovinoId) {
-        await apiPut('bovinos', editBovinoId, body);
+        response = await apiPut('bovinos', editBovinoId, body);
         showToast('Bovino actualizado correctamente', 'green');
     } else {
-        await apiPost('bovinos', body);
+        response = await apiPost('bovinos', body);
         showToast('Bovino registrado correctamente', 'green');
     }
 
+    if (response && response.errors) {
+        showToast('Error: ' + JSON.stringify(response.errors), 'red');
+        return;
+    }
+
     cancelFormBovino();
-    cargarBovinos();
+    await cargarBovinos();
 }
 
 function cancelFormBovino() {
