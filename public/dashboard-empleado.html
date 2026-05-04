@@ -6,7 +6,6 @@
   <title>Cow Farm - Empleado</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dashboard_empleado.css">
-  <link rel="icon" type="image/x-icon" href="img/Logo_SGDB.png">
 </head>
 <body>
 
@@ -61,7 +60,9 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
 
-    <!--PANEL BOVINOS -->
+    <!-- ══════════════════════════════════════
+         PANEL BOVINOS
+    ══════════════════════════════════════ -->
     <div class="content-panel active" id="panel-bovinos">
 
       <!-- KPIs -->
@@ -69,7 +70,7 @@
         <div class="kpi-card">
           <div>
             <div class="kpi-value" id="stat-toros">0</div>
-            <div class="kpi-label">Toro</div>
+            <div class="kpi-label">Toros/Borreg</div>
           </div>
           <div class="kpi-icon green">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
@@ -78,7 +79,7 @@
         <div class="kpi-card">
           <div>
             <div class="kpi-value" id="stat-ternitas">0</div>
-            <div class="kpi-label">Ternera</div>
+            <div class="kpi-label">Ternitas</div>
           </div>
           <div class="kpi-icon green">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a8f3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
@@ -168,6 +169,7 @@
                 <th>Litros</th>
                 <th>Turno</th>
                 <th>Registrado por</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody id="tabla-produccion"></tbody>
@@ -288,6 +290,7 @@
                 <th>Bovino</th>
                 <th>Peso (kg)</th>
                 <th>Registrado por</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody id="tabla-pesajes"></tbody>
@@ -331,6 +334,7 @@
         <div class="detalle-item">
           <div class="detalle-label">Peso Actual</div>
           <div class="detalle-value" id="det-peso">—</div>
+          <div style="font-size:11px;color:var(--texto-suave);margin-top:3px;" id="det-fecha-pesaje"></div>
         </div>
         <div class="detalle-item" style="grid-column:1/-1;">
           <div class="detalle-label">Estado de Salud</div>
@@ -346,7 +350,7 @@
   <div class="modal-overlay" id="modal-produccion">
     <div class="modal">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-        <div class="modal-title">Registrar Producción de Leche</div>
+        <div class="modal-title" id="modal-prod-title">Registrar Producción de Leche</div>
         <button onclick="closeModal('modal-produccion')" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--texto-suave);">✕</button>
       </div>
 
@@ -383,7 +387,7 @@
   <div class="modal-overlay" id="modal-pesaje">
     <div class="modal">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-        <div class="modal-title">Registrar Pesaje</div>
+        <div class="modal-title" id="modal-pesaje-title">Registrar Pesaje</div>
         <button onclick="closeModal('modal-pesaje')" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--texto-suave);">✕</button>
       </div>
 
