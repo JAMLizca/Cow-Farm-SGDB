@@ -2,84 +2,105 @@
 const { usuario, finca } = verificarSesion();
 
 // ── Info navbar y sidebar ──
-document.getElementById('user-name').textContent   = usuario.nombre;
-document.getElementById('user-avatar').textContent = usuario.nombre.charAt(0).toUpperCase();
+document.getElementById("user-name").textContent = usuario.nombre;
+document.getElementById("user-avatar").textContent = usuario.nombre
+    .charAt(0)
+    .toUpperCase();
 
 // ── Globals ──
-let todosBovinos  = [];
-let todosPesajes  = [];
+let todosBovinos = [];
+let todosPesajes = [];
 
 // ── Mostrar panel ──
 function showPanel(name) {
-    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-    document.getElementById('menu-' + name).classList.add('active');
+    document
+        .querySelectorAll(".content-panel")
+        .forEach((p) => p.classList.remove("active"));
+    document.getElementById("panel-" + name).classList.add("active");
+    document
+        .querySelectorAll(".sidebar-item")
+        .forEach((i) => i.classList.remove("active"));
+    document.getElementById("menu-" + name).classList.add("active");
 
-    if (name === 'bovinos')    cargarBovinos();
-    if (name === 'produccion') cargarProduccion();
-    if (name === 'sanitario')  cargarSanitario();
-    if (name === 'pesajes')    cargarPesajes();
+    if (name === "bovinos") cargarBovinos();
+    if (name === "produccion") cargarProduccion();
+    if (name === "sanitario") cargarSanitario();
+    if (name === "pesajes") cargarPesajes();
 }
 
 // ── Toast ──
 let toastTimer;
-function showToast(msg, type = '') {
-    const t = document.getElementById('toast');
+function showToast(msg, type = "") {
+    const t = document.getElementById("toast");
     t.textContent = msg;
-    t.className   = 'toast show ' + type;
+    t.className = "toast show " + type;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { t.className = 'toast'; }, 3000);
+    toastTimer = setTimeout(() => {
+        t.className = "toast";
+    }, 3000);
 }
 
 // ── Modal ──
-function openModal(id)  { document.getElementById(id).classList.add('show'); }
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-document.querySelectorAll('.modal-overlay').forEach(o => {
-    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+function openModal(id) {
+    document.getElementById(id).classList.add("show");
+}
+function closeModal(id) {
+    document.getElementById(id).classList.remove("show");
+}
+document.querySelectorAll(".modal-overlay").forEach((o) => {
+    o.addEventListener("click", (e) => {
+        if (e.target === o) o.classList.remove("show");
+    });
 });
 
 // ── Badge estado salud ──
 function badgeEstado(estado) {
-    if (estado === 'Saludable')       return `<span class="badge badge-green">${estado}</span>`;
-    if (estado === 'En tratamiento')  return `<span class="badge badge-red">${estado}</span>`;
+    if (estado === "Saludable")
+        return `<span class="badge badge-green">${estado}</span>`;
+    if (estado === "En tratamiento")
+        return `<span class="badge badge-red">${estado}</span>`;
     return `<span class="badge badge-yellow">${estado}</span>`;
 }
-
 
 // ══════════════════════════════════════
 //  BOVINOS (solo lectura + ver detalle)
 // ══════════════════════════════════════
 
 async function cargarBovinos() {
-    const bovinos = await apiGet('bovinos', { finca_id: finca.id });
-    todosBovinos  = bovinos;
+    const bovinos = await apiGet("bovinos", { finca_id: finca.id });
+    todosBovinos = bovinos;
 
     // KPIs
-    const toros    = bovinos.filter(b => ['Toro','Novillo','Becerro'].includes(b.categoria)).length;
-    const ternitas = bovinos.filter(b => ['Ternera','Ternero','Vaca','Novilla'].includes(b.categoria)).length;
-    const revision = bovinos.filter(b => b.estado_salud !== 'Saludable').length;
+    const toros = bovinos.filter((b) =>
+        ["Toro", "Novillo", "Becerro"].includes(b.categoria),
+    ).length;
+    const ternitas = bovinos.filter((b) =>
+        ["Ternera", "Ternero", "Vaca", "Novilla"].includes(b.categoria),
+    ).length;
+    const revision = bovinos.filter(
+        (b) => b.estado_salud !== "Saludable",
+    ).length;
 
-    document.getElementById('stat-toros').textContent    = toros;
-    document.getElementById('stat-ternitas').textContent = ternitas;
-    document.getElementById('stat-revision').textContent = revision;
+    document.getElementById("stat-toros").textContent = toros;
+    document.getElementById("stat-ternitas").textContent = ternitas;
+    document.getElementById("stat-revision").textContent = revision;
 
     // Tabla
-    const tbody = document.getElementById('tabla-bovinos');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("tabla-bovinos");
+    tbody.innerHTML = "";
 
     if (!bovinos.length) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:48px;color:var(--texto-suave)">No hay bovinos registrados</td></tr>`;
         return;
     }
 
-    bovinos.forEach(b => {
+    bovinos.forEach((b) => {
         tbody.innerHTML += `
             <tr>
                 <td>${b.id}</td>
                 <td><strong>${b.arete}</strong></td>
                 <td>${b.nombre}</td>
-                <td>${b.raza ? b.raza.nombre : '—'}</td>
+                <td>${b.raza ? b.raza.nombre : "—"}</td>
                 <td>${badgeEstado(b.estado_salud)}</td>
                 <td>
                     <button class="btn-detail" onclick="verDetalle(${b.id})">
@@ -93,112 +114,124 @@ async function cargarBovinos() {
 
 async function verDetalle(id) {
     const b = await apiGet(`bovinos/${id}`);
-    document.getElementById('det-arete').textContent  = b.arete  || '—';
-    document.getElementById('det-nombre').textContent = b.nombre || '—';
-    document.getElementById('det-raza').textContent   = b.raza   ? b.raza.nombre : '—';
-    document.getElementById('det-sexo').textContent   = b.sexo   || '—';
-    document.getElementById('det-fecha').textContent  = b.fecha_nacimiento || '—';
-    document.getElementById('det-peso').textContent   = b.peso_inicial ? b.peso_inicial + ' kg' : '—';
-    document.getElementById('det-estado').innerHTML   = badgeEstado(b.estado_salud);
-    openModal('modal-detalle-bovino');
+    document.getElementById("det-arete").textContent = b.arete || "—";
+    document.getElementById("det-nombre").textContent = b.nombre || "—";
+    document.getElementById("det-raza").textContent = b.raza
+        ? b.raza.nombre
+        : "—";
+    document.getElementById("det-sexo").textContent = b.sexo || "—";
+    document.getElementById("det-fecha").textContent =
+        b.fecha_nacimiento || "—";
+    document.getElementById("det-peso").textContent = b.peso_inicial
+        ? b.peso_inicial + " kg"
+        : "—";
+    document.getElementById("det-estado").innerHTML = badgeEstado(
+        b.estado_salud,
+    );
+    openModal("modal-detalle-bovino");
 }
-
 
 // ══════════════════════════════════════
 //  PRODUCCIÓN DE LECHE
 // ══════════════════════════════════════
 
 async function cargarProduccion() {
-    const registros = await apiGet('producciones', { finca_id: finca.id, usuario_id: usuario.id });
+    const registros = await apiGet("produccion-leche", { finca_id: finca.id });
 
     // KPIs
-    const hoy      = new Date().toISOString().split('T')[0];
-    const prodHoy  = registros
-        .filter(r => r.fecha === hoy)
-        .reduce((s, r) => s + parseFloat(r.litros || 0), 0);
-    const prodTotal = registros.reduce((s, r) => s + parseFloat(r.litros || 0), 0);
+    const hoy = new Date().toISOString().split("T")[0];
+    const prodHoy = registros
+        .filter((r) => r.fecha === hoy)
+        .reduce((s, r) => s + parseFloat(r.cantidad_litros || 0), 0);
+    const prodTotal = registros.reduce(
+        (s, r) => s + parseFloat(r.cantidad_litros || 0),
+        0,
+    );
 
-    document.getElementById('stat-prod-hoy').textContent   = prodHoy.toFixed(1) + ' L';
-    document.getElementById('stat-prod-total').textContent = prodTotal.toFixed(1) + ' L';
+    document.getElementById("stat-prod-hoy").textContent =
+        prodHoy.toFixed(1) + " L";
+    document.getElementById("stat-prod-total").textContent =
+        prodTotal.toFixed(1) + " L";
 
     // Tabla
-    const tbody = document.getElementById('tabla-produccion');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("tabla-produccion");
+    tbody.innerHTML = "";
 
     if (!registros.length) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:48px;color:var(--texto-suave)">No hay registros de producción</td></tr>`;
         return;
     }
 
-    registros.forEach(r => {
+    registros.forEach((r) => {
         tbody.innerHTML += `
             <tr>
                 <td>${r.fecha}</td>
-                <td>${r.bovino ? r.bovino.arete + ' - ' + r.bovino.nombre : '—'}</td>
-                <td>${parseFloat(r.litros).toFixed(1)} L</td>
+                <td>${r.bovino ? r.bovino.arete + " - " + r.bovino.nombre : "—"}</td>
+                <td>${parseFloat(r.cantidad_litros).toFixed(1)} L</td>
                 <td>${r.turno}</td>
                 <td>${r.usuario ? r.usuario.nombre : usuario.nombre}</td>
             </tr>`;
     });
 }
-
 async function openFormProduccion() {
-    const bovinos = await apiGet('bovinos', { finca_id: finca.id });
-    const sel     = document.getElementById('prod-bovino');
+    const bovinos = await apiGet("bovinos", { finca_id: finca.id });
+    const sel = document.getElementById("prod-bovino");
     sel.innerHTML = '<option value="">Seleccionar bovino</option>';
-    bovinos.forEach(b => {
+    bovinos.forEach((b) => {
         sel.innerHTML += `<option value="${b.id}">${b.arete} - ${b.nombre}</option>`;
     });
-    document.getElementById('prod-litros').value = '';
-    document.getElementById('prod-turno').value  = '';
-    openModal('modal-produccion');
+    document.getElementById("prod-litros").value = "";
+    document.getElementById("prod-turno").value = "";
+    openModal("modal-produccion");
 }
 
 async function saveProduccion() {
     const body = {
-        finca_id:   finca.id,
+        finca_id: finca.id,
         usuario_id: usuario.id,
-        bovino_id:  document.getElementById('prod-bovino').value,
-        litros:     document.getElementById('prod-litros').value,
-        turno:      document.getElementById('prod-turno').value,
-        fecha:      new Date().toISOString().split('T')[0],
+        bovino_id: document.getElementById("prod-bovino").value,
+        cantidad_litros: document.getElementById("prod-litros").value,
+        turno: document.getElementById("prod-turno").value,
+        fecha: new Date().toISOString().split("T")[0],
     };
 
-    if (!body.bovino_id || !body.litros || !body.turno) {
-        showToast('Completa todos los campos', 'red');
+    if (!body.bovino_id || !body.cantidad_litros || !body.turno) {
+        showToast("Completa todos los campos", "red");
         return;
     }
 
-    await apiPost('producciones', body);
-    showToast('Producción registrada correctamente', 'green');
-    closeModal('modal-produccion');
+    await apiPost("produccion-leche", body);
+    showToast("Producción registrada correctamente", "green");
+    closeModal("modal-produccion");
     cargarProduccion();
 }
-
 
 // ══════════════════════════════════════
 //  SANITARIO (solo marcar completado)
 // ══════════════════════════════════════
 
 async function cargarSanitario() {
-    const eventos = await apiGet('eventos-sanitarios', { finca_id: finca.id });
+    const eventos = await apiGet("eventos-sanitarios", { finca_id: finca.id });
 
-    const pendientes   = eventos.filter(e => e.estado === 'Pendiente').length;
-    const completados  = eventos.filter(e => e.estado === 'Ejecutado' || e.estado === 'Completado').length;
+    const pendientes = eventos.filter((e) => e.estado === "Pendiente").length;
+    const completados = eventos.filter(
+        (e) => e.estado === "Ejecutado" || e.estado === "Completado",
+    ).length;
 
-    document.getElementById('stat-san-pendientes').textContent  = pendientes;
-    document.getElementById('stat-san-completados').textContent = completados;
+    document.getElementById("stat-san-pendientes").textContent = pendientes;
+    document.getElementById("stat-san-completados").textContent = completados;
 
-    const tbody = document.getElementById('tabla-sanitario');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("tabla-sanitario");
+    tbody.innerHTML = "";
 
     if (!eventos.length) {
         tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:48px;color:var(--texto-suave)">No hay eventos sanitarios programados</td></tr>`;
         return;
     }
 
-    eventos.forEach(e => {
-        const completado = e.estado === 'Ejecutado' || e.estado === 'Completado';
+    eventos.forEach((e) => {
+        const completado =
+            e.estado === "Ejecutado" || e.estado === "Completado";
         const estadoBadge = completado
             ? `<span class="badge badge-green">Completado</span>`
             : `<span class="badge badge-yellow">Pendiente</span>`;
@@ -217,10 +250,10 @@ async function cargarSanitario() {
         tbody.innerHTML += `
             <tr>
                 <td><span style="display:flex;align-items:center;gap:6px;">${tipoIcon} ${e.tipo}</span></td>
-                <td>${e.bovino ? e.bovino.arete + ' - ' + e.bovino.nombre : '—'}</td>
+                <td>${e.bovino ? e.bovino.arete + " - " + e.bovino.nombre : "—"}</td>
                 <td><span class="fecha-cell">${calIcon} ${e.fecha}</span></td>
-                <td>${e.producto || '—'}</td>
-                <td>${e.usuario ? e.usuario.nombre : '—'}</td>
+                <td>${e.producto || "—"}</td>
+                <td>${e.usuario ? e.usuario.nombre : "—"}</td>
                 <td>${estadoBadge}</td>
                 <td>${accionBtn}</td>
             </tr>`;
@@ -228,37 +261,42 @@ async function cargarSanitario() {
 }
 
 async function marcarCompletado(id) {
-    await apiPut('eventos-sanitarios', id, { estado: 'Ejecutado' });
-    showToast('Evento marcado como completado', 'green');
+    await apiPut("eventos-sanitarios", id, { estado: "Ejecutado" });
+    showToast("Evento marcado como completado", "green");
     cargarSanitario();
 }
-
 
 // ══════════════════════════════════════
 //  PESAJES
 // ══════════════════════════════════════
 
 async function cargarPesajes() {
-    const pesajes = await apiGet('pesajes', { finca_id: finca.id });
-    todosPesajes  = pesajes;
+    const pesajes = await apiGet("pesajes", { finca_id: finca.id });
+    todosPesajes = pesajes;
 
     // KPIs
     if (pesajes.length) {
-        const ultimo  = pesajes[0];
-        const promedio = pesajes.reduce((s, p) => s + parseFloat(p.peso || 0), 0) / pesajes.length;
-        document.getElementById('stat-ultimo-pesaje').textContent  = parseFloat(ultimo.peso).toFixed(0) + ' kg';
-        document.getElementById('stat-peso-promedio').textContent  = promedio.toFixed(1) + ' kg';
+        const ultimo = pesajes[0];
+        const promedio =
+            pesajes.reduce((s, p) => s + parseFloat(p.peso || 0), 0) /
+            pesajes.length;
+        document.getElementById("stat-ultimo-pesaje").textContent =
+            parseFloat(ultimo.peso).toFixed(0) + " kg";
+        document.getElementById("stat-peso-promedio").textContent =
+            promedio.toFixed(1) + " kg";
     } else {
-        document.getElementById('stat-ultimo-pesaje').textContent = '— kg';
-        document.getElementById('stat-peso-promedio').textContent = '— kg';
+        document.getElementById("stat-ultimo-pesaje").textContent = "— kg";
+        document.getElementById("stat-peso-promedio").textContent = "— kg";
     }
 
     // Llenar filtro de bovinos
-    const bovinos    = [...new Map(pesajes.map(p => [p.bovino_id, p.bovino])).values()].filter(Boolean);
-    const filtroSel  = document.getElementById('filtro-bovino-pesaje');
-    const valActual  = filtroSel.value;
+    const bovinos = [
+        ...new Map(pesajes.map((p) => [p.bovino_id, p.bovino])).values(),
+    ].filter(Boolean);
+    const filtroSel = document.getElementById("filtro-bovino-pesaje");
+    const valActual = filtroSel.value;
     filtroSel.innerHTML = '<option value="">Todos los bovinos</option>';
-    bovinos.forEach(b => {
+    bovinos.forEach((b) => {
         filtroSel.innerHTML += `<option value="${b.id}">${b.arete} - ${b.nombre}</option>`;
     });
     filtroSel.value = valActual;
@@ -267,19 +305,19 @@ async function cargarPesajes() {
 }
 
 function renderPesajes(pesajes) {
-    const tbody = document.getElementById('tabla-pesajes');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("tabla-pesajes");
+    tbody.innerHTML = "";
 
     if (!pesajes.length) {
         tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:48px;color:var(--texto-suave)">No hay pesajes registrados</td></tr>`;
         return;
     }
 
-    pesajes.forEach(p => {
+    pesajes.forEach((p) => {
         tbody.innerHTML += `
             <tr>
                 <td>${p.fecha}</td>
-                <td>${p.bovino ? p.bovino.arete + ' - ' + p.bovino.nombre : '—'}</td>
+                <td>${p.bovino ? p.bovino.arete + " - " + p.bovino.nombre : "—"}</td>
                 <td>${parseFloat(p.peso).toFixed(0)} kg</td>
                 <td>${p.usuario ? p.usuario.nombre : usuario.nombre}</td>
             </tr>`;
@@ -287,46 +325,49 @@ function renderPesajes(pesajes) {
 }
 
 function filtrarPesajes() {
-    const val = document.getElementById('filtro-bovino-pesaje').value;
+    const val = document.getElementById("filtro-bovino-pesaje").value;
     if (!val) {
         renderPesajes(todosPesajes);
     } else {
-        renderPesajes(todosPesajes.filter(p => String(p.bovino_id) === String(val)));
+        renderPesajes(
+            todosPesajes.filter((p) => String(p.bovino_id) === String(val)),
+        );
     }
 }
 
 async function openFormPesaje() {
-    const bovinos = await apiGet('bovinos', { finca_id: finca.id });
-    const sel     = document.getElementById('pesaje-bovino');
+    const bovinos = await apiGet("bovinos", { finca_id: finca.id });
+    const sel = document.getElementById("pesaje-bovino");
     sel.innerHTML = '<option value="">Seleccionar bovino</option>';
-    bovinos.forEach(b => {
+    bovinos.forEach((b) => {
         sel.innerHTML += `<option value="${b.id}">${b.arete} - ${b.nombre}</option>`;
     });
-    document.getElementById('pesaje-peso').value  = '';
-    document.getElementById('pesaje-fecha').value = new Date().toISOString().split('T')[0];
-    openModal('modal-pesaje');
+    document.getElementById("pesaje-peso").value = "";
+    document.getElementById("pesaje-fecha").value = new Date()
+        .toISOString()
+        .split("T")[0];
+    openModal("modal-pesaje");
 }
 
 async function savePesaje() {
     const body = {
-        finca_id:   finca.id,
+        finca_id: finca.id,
         usuario_id: usuario.id,
-        bovino_id:  document.getElementById('pesaje-bovino').value,
-        peso:       document.getElementById('pesaje-peso').value,
-        fecha:      document.getElementById('pesaje-fecha').value,
+        bovino_id: document.getElementById("pesaje-bovino").value,
+        peso: document.getElementById("pesaje-peso").value,
+        fecha: document.getElementById("pesaje-fecha").value,
     };
 
     if (!body.bovino_id || !body.peso || !body.fecha) {
-        showToast('Completa todos los campos', 'red');
+        showToast("Completa todos los campos", "red");
         return;
     }
 
-    await apiPost('pesajes', body);
-    showToast('Pesaje registrado correctamente', 'green');
-    closeModal('modal-pesaje');
+    await apiPost("pesajes", body);
+    showToast("Pesaje registrado correctamente", "green");
+    closeModal("modal-pesaje");
     cargarPesajes();
 }
-
 
 // ── Cargar al inicio ──
 cargarBovinos();
