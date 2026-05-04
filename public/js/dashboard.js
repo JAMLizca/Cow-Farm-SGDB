@@ -337,19 +337,31 @@ function cancelFormSanitario() {
 //  REPORTES
 
 async function cargarReportes() {
-    const bovinos = await apiGet('bovinos', { finca_id: finca.id });
-    const eventos = await apiGet('eventos-sanitarios', { finca_id: finca.id });
+    const bovinos    = await apiGet('bovinos', { finca_id: finca.id });
+    const eventos    = await apiGet('eventos-sanitarios', { finca_id: finca.id });
+    const produccion = await apiGet('produccion-leche', { finca_id: finca.id });
+    const pesajes    = await apiGet('pesajes', { finca_id: finca.id });
 
-    // KPIs
+    console.log('Produccion:', produccion);
+    console.log('Pesajes:', pesajes);
+
+    // ── KPIs ──
+    const hoy     = new Date().toISOString().split('T')[0];
+    const prodHoy = produccion
+        .filter(r => r.fecha === hoy)
+        .reduce((s, r) => s + parseFloat(r.cantidad_litros || 0), 0);
+
     const pesoPromedio = bovinos.length
         ? Math.round(bovinos.reduce((s, b) => s + parseFloat(b.peso_inicial || 0), 0) / bovinos.length)
         : 0;
+
+    document.getElementById('rep-leche').textContent   = prodHoy.toFixed(1) + ' L';
     document.getElementById('rep-peso').textContent    = pesoPromedio + ' kg';
     document.getElementById('rep-vacunas').textContent = eventos.filter(e => e.tipo === 'Vacunación').length;
     document.getElementById('rep-alertas').textContent = bovinos.filter(b => b.estado_salud !== 'Saludable').length;
     document.getElementById('hato-total').textContent  = bovinos.length;
 
-    // Donut estado del hato
+    // ── Donut estado del hato ──
     const sanos = bovinos.filter(b => b.estado_salud === 'Saludable').length;
     const obs   = bovinos.filter(b => b.estado_salud === 'En observación').length;
     const trat  = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
@@ -368,7 +380,13 @@ async function cargarReportes() {
             <strong>${i.val}</strong>
         </div>`).join('');
 
-    if (chartEstado) chartEstado.destroy();
+    // Destruir gráficas existentes antes de recrear
+    if (chartEstado)  { chartEstado.destroy();  chartEstado  = null; }
+    if (chartPeso)    { chartPeso.destroy();    chartPeso    = null; }
+    if (chartSan)     { chartSan.destroy();     chartSan     = null; }
+    if (chartLeche)   { chartLeche.destroy();   chartLeche   = null; }
+
+    // ── Donut hato ──
     chartEstado = new Chart(document.getElementById('chart-estado'), {
         type: 'doughnut',
         data: {
@@ -386,14 +404,13 @@ async function cargarReportes() {
         }
     });
 
-    // Barras peso por raza
-    const razasUnicas = [...new Set(bovinos.map(b => b.raza ? b.raza.nombre : 'Sin raza'))];
+    // ── Barras peso por raza ──
+    const razasUnicas  = [...new Set(bovinos.map(b => b.raza ? b.raza.nombre : 'Sin raza'))];
     const pesosPorRaza = razasUnicas.map(r => {
         const grupo = bovinos.filter(b => (b.raza ? b.raza.nombre : 'Sin raza') === r);
         return Math.round(grupo.reduce((s, b) => s + parseFloat(b.peso_inicial || 0), 0) / grupo.length);
     });
 
-    if (chartPeso) chartPeso.destroy();
     chartPeso = new Chart(document.getElementById('chart-peso'), {
         type: 'bar',
         data: {
@@ -416,11 +433,10 @@ async function cargarReportes() {
         }
     });
 
-    // Barras eventos sanitarios
-    const tipos   = ['Vacunación', 'Desparasitación', 'Tratamiento', 'Revisión'];
-    const counts  = tipos.map(t => eventos.filter(e => e.tipo === t).length);
+    // ── Barras eventos sanitarios ──
+    const tipos  = ['Vacunación', 'Desparasitación', 'Tratamiento', 'Revisión'];
+    const counts = tipos.map(t => eventos.filter(e => e.tipo === t).length);
 
-    if (chartSan) chartSan.destroy();
     chartSan = new Chart(document.getElementById('chart-sanitario-rep'), {
         type: 'bar',
         data: {
@@ -442,16 +458,36 @@ async function cargarReportes() {
         }
     });
 
-    // Producción leche (placeholder con datos vacíos por ahora)
-    if (chartLeche) chartLeche.destroy();
-    const dias = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+    // ── Gráfica producción últimos 7 días ──
+    const ultimos7 = [];
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        ultimos7.push(d.toISOString().split('T')[0]);
+    }
+
+    const litrosPorDia = ultimos7.map(dia =>
+        produccion
+            .filter(r => r.fecha === dia)
+            .reduce((s, r) => s + parseFloat(r.cantidad_litros || 0), 0)
+    );
+
+    const totalLeche = litrosPorDia.reduce((s, l) => s + l, 0);
+    const repTotalEl = document.getElementById('rep-total-leche');
+    if (repTotalEl) repTotalEl.textContent = totalLeche.toFixed(1) + ' L';
+
+    const diasLabel = ultimos7.map(d => {
+        const fecha = new Date(d + 'T00:00:00');
+        return fecha.toLocaleDateString('es-CO', { weekday: 'short' });
+    });
+
     chartLeche = new Chart(document.getElementById('chart-leche'), {
         type: 'bar',
         data: {
-            labels: dias,
+            labels: diasLabel,
             datasets: [{
                 label: 'Litros',
-                data: [0, 0, 0, 0, 0, 0, 0],
+                data: litrosPorDia,
                 backgroundColor: 'rgba(26,143,60,0.15)',
                 borderColor: '#1a8f3c',
                 borderWidth: 2,
