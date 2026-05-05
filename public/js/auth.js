@@ -1,4 +1,4 @@
-const API_URL = 'https://tu-app-production.up.railway.app/api';
+const API_URL = 'https://cow-farm-sgdb-production.up.railway.app/api';
 
 document.getElementById('btn-login').addEventListener('click', async () => {
 
