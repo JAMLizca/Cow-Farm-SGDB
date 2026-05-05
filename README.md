@@ -31,3 +31,18 @@ El proyecto está desarrollado con **Laravel (backend)** y un frontend basado en
 ---
 
 ## 📂 Estructura del proyecto
+
+- FALTA COLGAR LA IMG DE LA ESTRUCTURA Y EXPLICAR
+
+
+---
+
+## ⚙️ Instalación y configuración
+
+Sigue estos pasos para ejecutar el proyecto en tu etorno local:
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/tu-repositorio.git
+cd tu-repositorio
