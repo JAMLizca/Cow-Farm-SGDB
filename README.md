@@ -1,48 +1,298 @@
+# 🐄 SGDB — Sistema de Gestión de Bovinos
 
-
-# 🐄 Sistema de Gestión para Bovinos (Cow Farm)
-
-Aplicación web desarrollada para la gestión eficiente de fincas ganaderas, permitiendo el control de bovinos, registros, y procesos administrativos.
+Sistema web multi-finca para la administración y control integral de información ganadera. Permite gestionar bovinos, producción de leche, eventos sanitarios, pesajes y usuarios, con acceso diferenciado por roles (administrador y empleado).
 
 ---
 
-## 📌 Descripción
+## 📋 Descripción
 
-Este sistema permite administrar información relacionada con bovinos y fincas, facilitando el manejo de datos como:
+El SGDB surge como solución a la problemática de desorganización en el manejo de información ganadera. Los ganaderos pueden centralizar todos los datos de su finca en un solo sistema accesible desde el navegador, eliminando el uso de registros manuales y hojas de cálculo dispersas.
 
-- Registro de bovinos
-- Control de fincas
-- Gestión de usuarios
-- Seguimiento de información relevante
-
-El proyecto está desarrollado con **Laravel (backend)** y un frontend basado en **HTML, CSS y JavaScript**.
+Cada finca opera de forma completamente aislada mediante un código único de acceso. El sistema detecta automáticamente el rol del usuario al iniciar sesión y habilita únicamente las funciones correspondientes a su perfil.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## ✨ Funcionalidades principales
 
-- PHP 8+
-- Laravel
-- MySQL
-- HTML5
-- CSS3
-- JavaScript
+### Administrador
+- Gestión completa de bovinos (CRUD)
+- Gestión de usuarios y empleados
+- Registro y seguimiento de eventos sanitarios
+- Módulo de reportes con gráficas (producción, estado del hato, peso por raza, eventos sanitarios)
+- Gestión de lotes y razas
+
+### Empleado
+- Visualización del listado de bovinos
+- Registro de producción de leche diaria
+- Marcar eventos sanitarios como completados
+- Registro de pesajes con historial y filtros
 
 ---
 
-## 📂 Estructura del proyecto
+## 🛠️ Tecnologías utilizadas
 
-- FALTA COLGAR LA IMG DE LA ESTRUCTURA Y EXPLICAR
+### Backend
+| Tecnología | Versión | Uso |
+|---|---|---|
+| PHP | 8.3.6 | Lenguaje del servidor |
+| Laravel | 12.53.0 | Framework backend — arquitectura MVC |
+| MySQL | 8.0.45 | Base de datos relacional |
+| Eloquent ORM | Incluido en Laravel | Interacción con la base de datos |
+| Laravel Sanctum | 4.x | Autenticación y seguridad |
 
+### Frontend
+| Tecnología | Versión | Uso |
+|---|---|---|
+| HTML5 | — | Estructura de las vistas |
+| CSS3 | — | Estilos y diseño responsive |
+| JavaScript (ES6+) | — | Lógica de interacción |
+| Fetch API | Nativa | Consumo de la API REST |
+| Chart.js | 4.x | Gráficas de reportes |
 
 ---
 
-## ⚙️ Instalación y configuración
+## 🗄️ Estructura de la base de datos
 
-Sigue estos pasos para ejecutar el proyecto en tu etorno local:
+El sistema cuenta con 9 tablas principales:
 
-### 1. Clonar el repositorio
+```
+fincas
+usuarios
+razas
+lotes
+bovinos
+produccion_leche
+pesajes
+eventos_sanitarios
+alimentacion
+```
+
+Todas las tablas incluyen `finca_id` como clave foránea para garantizar el aislamiento de datos entre fincas.
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+Sistema_De_Gestion_De_Bovinos/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/         ← Controladores de la API
+│   └── Models/                  ← Modelos Eloquent
+├── database/
+│   └── migrations/              ← Migraciones de tablas
+├── routes/
+│   ├── api.php                  ← Endpoints REST
+│   └── web.php
+├── public/
+│   ├── index.html               ← Login
+│   ├── dashboard-admin.html     ← Dashboard administrador
+│   ├── dashboard-empleado.html  ← Dashboard empleado
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   ├── api.js               ← Funciones de consumo API
+│   │   ├── auth.js              ← Lógica de autenticación
+│   │   ├── dashboard.js         ← Lógica del admin
+│   │   └── dashboard_empleado.js
+│   └── img/
+│       └── Logo_SGDB.png
+└── .env                         ← Variables de entorno
+```
+
+---
+
+## ⚙️ Instalación local
+
+### Requisitos previos
+
+- PHP 8.2 o superior
+- Composer
+- MySQL 8.x
+- Node.js (para assets)
+- Servidor local: XAMPP
+
+---
+
+### Paso 1 — Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
+git clone https://github.com/JAMLizca/Cow-Farm-SGDB
+cd sgdb
+```
+
+---
+
+### Paso 2 — Instalar dependencias de PHP
+
+```bash
+composer install
+```
+
+---
+
+### Paso 3 — Configurar el archivo de entorno
+
+Copia el archivo de ejemplo y edítalo:
+
+```bash
+cp .env.example .env
+```
+
+Abre `.env` y configura la conexión a la base de datos:
+
+```env
+APP_NAME=SGDB
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sgdb
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+
+---
+
+### Paso 4 — Crear la base de datos
+
+Abre phpMyAdmin o tu cliente de base de datos favorito y crea una base de datos llamada `sgdb` con cotejamiento `utf8mb4_unicode_ci`.
+
+---
+
+### Paso 5 — Ejecutar las migraciones
+
+```bash
+php artisan migrate
+```
+
+---
+
+### Paso 6 — Instalar Sanctum
+
+```bash
+php artisan install:api
+php artisan migrate
+```
+
+---
+
+### Paso 7 — Crear datos de prueba
+
+Abre la consola de Laravel:
+
+```bash
+php artisan tinker
+```
+
+Crea una finca de prueba:
+
+```php
+use App\Models\Finca;
+use Illuminate\Support\Facades\Hash;
+
+Finca::create([
+    'codigo_finca' => 'FINCA001',
+    'nombre'       => 'La Esperanza',
+    'password'     => Hash::make('123456'),
+    'propietario'  => 'Juan Perez',
+    'activo'       => true,
+]);
+```
+
+Crea un usuario administrador:
+
+```php
+use App\Models\Usuario;
+
+Usuario::create([
+    'finca_id' => 1,
+    'nombre'   => 'Carlos',
+    'password' => Hash::make('admin123'),
+    'rol'      => 'admin',
+    'activo'   => true,
+]);
+```
+
+Sal de tinker:
+
+```php
+exit
+```
+
+---
+
+### Paso 8 — Iniciar el servidor de Laravel
+
+```bash
+php artisan serve
+```
+
+Elproyecto estará disponible en: `http://127.0.0.1:8000/index.html`
+
+---
+
+## 🔑 Credenciales de prueba
+
+| Campo | Valor |
+|---|---|
+| Código de Finca | `FINCA001` |
+| Usuario Admin | `Carlos` |
+| Contraseña Admin | `admin123` |
+
+Para crear un empleado de prueba desde Postman:
+
+```json
+POST http://127.0.0.1:8000/api/usuarios
+
+{
+    "finca_id": 1,
+    "nombre": "Maria",
+    "password": "emp123",
+    "rol": "empleado",
+    "activo": true
+}
+```
+
+---
+
+## 🌐 API REST — Endpoints principales
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| POST | `/api/login` | Iniciar sesión |
+| GET | `/api/bovinos?finca_id=1` | Listar bovinos |
+| POST | `/api/bovinos` | Registrar bovino |
+| PUT | `/api/bovinos/{id}` | Actualizar bovino |
+| DELETE | `/api/bovinos/{id}` | Eliminar bovino |
+| GET | `/api/usuarios?finca_id=1` | Listar usuarios |
+| POST | `/api/usuarios` | Crear usuario |
+| GET | `/api/produccion-leche?finca_id=1` | Listar producción |
+| POST | `/api/produccion-leche` | Registrar producción |
+| GET | `/api/pesajes?finca_id=1` | Listar pesajes |
+| POST | `/api/pesajes` | Registrar pesaje |
+| GET | `/api/eventos-sanitarios?finca_id=1` | Listar eventos |
+| POST | `/api/eventos-sanitarios` | Registrar evento |
+| GET | `/api/razas` | Listar razas |
+| GET | `/api/lotes?finca_id=1` | Listar lotes |
+
+---
+
+## 👥 Roles del sistema
+
+| Rol | Descripción |
+|---|---|
+| **Admin** | Acceso total — gestiona bovinos, usuarios, eventos sanitarios y reportes |
+| **Empleado** | Acceso limitado — registra producción de leche, pesajes y marca eventos como completados |
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado como proyecto académico.
