@@ -113,6 +113,7 @@ Sistema_De_Gestion_De_Bovinos/
 - Node.js (para assets)
 - Servidor local: XAMPP
 - Postman
+- Git
 
 ---
 
