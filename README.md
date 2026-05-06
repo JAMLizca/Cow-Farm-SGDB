@@ -166,7 +166,9 @@ Abre phpMyAdmin o tu cliente de base de datos favorito y crea una base de datos 
 
 ---
 
-### Paso 5 — Ejecutar las migraciones
+### Paso 5 — Ejecutar las migraciones**
+
+Abre el proyecto en tu editor de código favorito; te recomiendo VS Code. Luego, abre una terminal desde el mismo editor y asegúrate de estar dentro de la carpeta del proyecto. Ejecuta el siguiente comando:
 
 ```bash
 php artisan migrate
