@@ -106,11 +106,13 @@ Sistema_De_Gestion_De_Bovinos/
 
 ### Requisitos previos
 
+- Editor de código de preferencia (vs code)
 - PHP 8.2 o superior
 - Composer
 - MySQL 8.x
 - Node.js (para assets)
 - Servidor local: XAMPP
+- Postman
 
 ---
 
