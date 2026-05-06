@@ -121,7 +121,7 @@ Sistema_De_Gestion_De_Bovinos/
 
 ```bash
 git clone https://github.com/JAMLizca/Cow-Farm-SGDB
-cd sgdb
+cd Cow-Farm-SGDB
 ```
 
 ---
