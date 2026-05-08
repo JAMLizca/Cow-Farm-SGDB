@@ -708,3 +708,83 @@ tbody td {
     color: var(--verde-oscuro);
     text-decoration: underline;
 }
+
+/* REPORTES */
+
+.rep-card {
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.rep-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 4px;
+}
+
+.rep-card-sub {
+  font-size: 12px;
+  color: var(--texto-suave);
+  margin-bottom: 16px;
+}
+
+.rep-total {
+  font-size: 12px;
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.hato-number {
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--texto);
+  text-align: center;
+  margin: 12px 0 4px;
+}
+
+.hato-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--texto-suave);
+  margin-bottom: 16px;
+}
+
+.hato-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hato-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#estado-leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 160px;
+}
+
+.empty-sanitario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--texto-suave);
+}
+
+.empty-sanitario svg { margin-bottom: 12px; }
+.empty-sanitario p  { font-size: 14px; }
+
+/* MSNU HAMBURGUESA  */
