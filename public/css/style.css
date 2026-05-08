@@ -844,4 +844,182 @@ tbody td {
 }
 
 /* RESPONSIVE TABET (max 768px) */
+@media (max-width: 768px) {
 
+  .menu-toggle {
+    display: flex;
+  }
+
+  .sidebar {
+    display: none;
+    width: 240px;
+  }
+
+  .sidebar.open {
+    display: flex;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    z-index: 150;
+    box-shadow: 6px 0 24px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.25s ease;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-top: 64px;
+    padding: 16px;
+  }
+
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbar-brand {
+    font-size: 15px;
+    flex: 1;
+  }
+
+  .nav-logo-box {
+    width: 34px;
+    height: 34px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .kpi-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .kpi-card {
+    padding: 14px 16px;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .card {
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-save,
+  .btn-cancel {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 540px;
+  }
+
+  thead th {
+    font-size: 12px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .modal-overlay {
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    margin: 0;
+    padding: 24px 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .rep-card {
+    padding: 16px;
+  }
+
+  .hato-wrap {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #estado-leyenda {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .toast {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    text-align: center;
+  }
+
+  .login-wrapper {
+    padding: 16px;
+  }
+
+  .login-card {
+    margin: 0;
+    padding: 36px 24px;
+    min-height: auto;
+    border-radius: 16px;
+  }
+
+  .login-logo img {
+    width: 130px;
+    height: 130px;
+  }
+}
