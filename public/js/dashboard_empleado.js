@@ -62,9 +62,7 @@ function badgeEstado(estado) {
     return `<span class="badge badge-yellow">${estado}</span>`;
 }
 
-// ══════════════════════════════════════
 //  BOVINOS (solo lectura + ver detalle)
-// ══════════════════════════════════════
 
 async function cargarBovinos() {
     const bovinos = await apiGet("bovinos", { finca_id: finca.id });
@@ -150,14 +148,7 @@ async function verDetalle(id) {
     openModal("modal-detalle-bovino");
 }
 
-// ══════════════════════════════════════
 //  PRODUCCIÓN DE LECHE
-// ══════════════════════════════════════
-
-
-// ══════════════════════════════════════
-//  PRODUCCIÓN DE LECHE
-// ══════════════════════════════════════
 
 let editProduccionId = null;
 
@@ -286,9 +277,8 @@ async function eliminarProduccion(id) {
     cargarProduccion();
 }
 
-// ══════════════════════════════════════
+
 //  SANITARIO (solo marcar completado)
-// ══════════════════════════════════════
 
 async function cargarSanitario() {
     const eventos = await apiGet("eventos-sanitarios", { finca_id: finca.id });
@@ -346,14 +336,8 @@ async function marcarCompletado(id) {
     cargarSanitario();
 }
 
-// ══════════════════════════════════════
-//  PESAJES
-// ══════════════════════════════════════
 
-
-// ══════════════════════════════════════
 //  PESAJES
-// ══════════════════════════════════════
 
 let editPesajeId = null;
 
@@ -516,6 +500,7 @@ async function eliminarPesaje(id) {
     showToast("Pesaje eliminado", "red");
     cargarPesajes();
 }
+
 
 
 // ── Cargar al inicio ──
