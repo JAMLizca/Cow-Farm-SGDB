@@ -1159,3 +1159,7 @@ tbody td {
     max-width: 100%;
   }
 }
+
+/*En el dashboard del Admin el modal de bovino
+y reportes no estan responsive, lo mismo
+sucede con el dashboard del empleado modal de bovino*/
