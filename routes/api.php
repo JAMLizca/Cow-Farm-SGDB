@@ -9,6 +9,7 @@ use App\Http\Controllers\ProduccionLecheController;
 use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\EventoSanitarioController;
 use App\Http\Controllers\AlimentacionController;
+use App\Http\Controllers\SuperAdminController;
 
 // Ruta de login
 Route::post('/login', [AuthController::class, 'login']);
@@ -68,3 +69,12 @@ Route::get('/alimentacion/{id}',   [AlimentacionController::class, 'show']);
 Route::post('/alimentacion',       [AlimentacionController::class, 'store']);
 Route::put('/alimentacion/{id}',   [AlimentacionController::class, 'update']);
 Route::delete('/alimentacion/{id}',[AlimentacionController::class, 'destroy']);
+
+// Super Admin
+Route::post('/superadmin/login',              [SuperAdminController::class, 'login']);
+Route::get('/superadmin/fincas',              [SuperAdminController::class, 'index']);
+Route::post('/superadmin/fincas',             [SuperAdminController::class, 'store']);
+Route::put('/superadmin/fincas/{id}',         [SuperAdminController::class, 'update']);
+Route::delete('/superadmin/fincas/{id}',      [SuperAdminController::class, 'destroy']);
+Route::patch('/superadmin/fincas/{id}/toggle',[SuperAdminController::class, 'toggleActivo']);
+Route::get('/superadmin/fincas/{id}/usuarios',[SuperAdminController::class, 'usuarios']);
