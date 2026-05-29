@@ -428,46 +428,258 @@
     font-weight: 700;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .sa-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/*  RESPONSIVE */
 
-    .sa-form-grid {
-        grid-template-columns: 1fr;
-    }
+/* TABLET GRANDE (max 1024px) */
+@media (max-width: 1024px) {
 
-    .sa-main {
-        padding: 16px;
-    }
+  .sa-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
 
-    .sa-navbar {
-        padding: 0 16px;
-    }
+  .sa-main {
+    padding: 20px;
+  }
 
-    .sa-navbar-sub {
-        display: none;
-    }
-
-    .sa-modal {
-        max-width: 100%;
-    }
+  .sa-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
+/* ── TABLET (max 768px) ── */
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .sa-navbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .sa-navbar-sub {
+    display: none;
+  }
+
+  .sa-navbar-title {
+    font-size: 14px;
+  }
+
+  .sa-navbar-logo img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sa-user-pill {
+    display: none;
+  }
+
+  .sa-btn-logout {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Main */
+  .sa-main {
+    margin-top: 60px;
+    padding: 16px;
+  }
+
+  /* Stats */
+  .sa-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sa-stat-card {
+    padding: 16px;
+  }
+
+  .sa-stat-value {
+    font-size: 24px;
+  }
+
+  .sa-stat-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Card */
+  .sa-card {
+    padding: 16px;
+  }
+
+  .sa-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sa-btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Tabla */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 700px;
+  }
+
+  thead th {
+    font-size: 11px;
+    padding: 10px 10px;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    font-size: 12px;
+    padding: 10px 10px;
+  }
+
+  .btn-edit,
+  .btn-delete,
+  .sa-btn-toggle-on,
+  .sa-btn-toggle-off,
+  .sa-btn-usuarios {
+    padding: 4px 8px;
+    font-size: 11px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    margin: 0;
+    padding: 24px 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .sa-modal {
+    max-width: 100%;
+  }
+
+  .sa-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions .btn-cancel,
+  .modal-actions .sa-btn-primary,
+  .modal-actions .btn-delete {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Login */
+  .sa-login-card {
+    margin: 16px;
+    padding: 36px 24px;
+  }
+}
+
+/* MÓVIL PEQUEÑO (max 480px) */
 @media (max-width: 480px) {
-    .sa-stats-grid {
-        grid-template-columns: 1fr;
-    }
 
-    .sa-card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
+  .sa-navbar {
+    height: 54px;
+  }
 
-    .sa-btn-primary {
-        width: 100%;
-        justify-content: center;
-    }
+  .sa-main {
+    margin-top: 54px;
+    padding: 12px;
+  }
+
+  /* Stats 1 columna */
+  .sa-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .sa-stat-card {
+    padding: 14px;
+  }
+
+  .sa-stat-value {
+    font-size: 22px;
+  }
+
+  .sa-stat-label {
+    font-size: 11px;
+  }
+
+  .sa-stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sa-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .sa-card-title {
+    font-size: 15px;
+  }
+
+  .sa-card-subtitle {
+    font-size: 12px;
+  }
+
+  .sa-modal-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .modal-title {
+    font-size: 15px;
+  }
+
+  .sa-section-label {
+    font-size: 11px;
+  }
+
+  /* Login */
+  .sa-login-card {
+    margin: 12px;
+    padding: 28px 18px;
+  }
+
+  .sa-login-logo img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .sa-login-card h1 {
+    font-size: 18px;
+  }
+
+  .sa-subtitle {
+    font-size: 11px;
+  }
+
+  /* Toast */
+  .toast {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    text-align: center;
+    font-size: 13px;
+  }
 }
