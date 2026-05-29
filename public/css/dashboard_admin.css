@@ -1,5 +1,5 @@
 
-    /* ── KPI cards ── */
+    /* KPI cards */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -37,7 +37,7 @@
     .kpi-icon.yellow { background: #fef9e7; }
     .kpi-icon.red    { background: #fff5f5; }
 
-    /* ── Reportes layout ── */
+    /* Reportes layout */
     .rep-row-1 {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -96,7 +96,7 @@
       margin-bottom: 20px;
     }
 
-    /* ── Empty state sanitario ── */
+    /* Empty state sanitario */
     .empty-sanitario {
       display: flex;
       flex-direction: column;
@@ -112,7 +112,7 @@
       font-size: 14px;
     }
 
-    /* ── Sidebar icons ── */
+    /* Sidebar icons */
     .sidebar-item {
       display: flex;
       align-items: center;
@@ -122,7 +122,7 @@
       flex-shrink: 0;
     }
 
-    /* ── Navbar logo ── */
+    /* Navbar logo */
     .nav-logo-box {
       width: 40px; height: 40px;
       border-radius: 50%;

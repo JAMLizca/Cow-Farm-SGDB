@@ -84,7 +84,8 @@
 
 /* NAVBAR */
 .sa-navbar {
-    background: #1a2332;
+    /*Mirar color con el otro dashboard*/
+      background: linear-gradient(135deg, #fcfefd 0%, #8e9891 50%, #8f9290 100%);
     height: 68px;
     display: flex;
     align-items: center;
@@ -105,8 +106,8 @@
 }
 
 .sa-navbar-logo img {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid rgba(255, 255, 255, 0.2);
