@@ -85,7 +85,7 @@
 /* NAVBAR */
 .sa-navbar {
     /*Mirar color con el otro dashboard*/
-      background: linear-gradient(135deg, #fcfefd 0%, #8e9891 50%, #8f9290 100%);
+      background: rgb(60, 164, 89);
     height: 68px;
     display: flex;
     align-items: center;

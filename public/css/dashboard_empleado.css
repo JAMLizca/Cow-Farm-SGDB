@@ -1,4 +1,4 @@
-/* ── KPI grid base ── */
+/* KPI grid base */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -6,12 +6,12 @@
   margin-bottom: 24px;
 }
 
-/* ── KPI grid de 2 columnas (producción, sanitario, pesajes) ── */
+/* KPI grid de 2 columnas (producción, sanitario, pesajes) */
 .kpi-grid-2 {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* ── KPI card ── */
+/* KPI card */
 .kpi-card {
   background: var(--blanco);
   border-radius: 12px;
@@ -51,7 +51,7 @@
 .kpi-icon.red    { background: #fff5f5; }
 .kpi-icon.blue   { background: #ebf8ff; }
 
-/* ── Detalle bovino modal ── */
+/* Detalle bovino modal */
 .detalle-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -76,7 +76,7 @@
   color: var(--texto);
 }
 
-/* ── Botón ver detalle (verde) ── */
+/* Botón ver detalle (verde) */
 .btn-detail {
   padding: 7px 16px;
   background: var(--verde);
@@ -98,7 +98,7 @@
   transform: translateY(-1px);
 }
 
-/* ── Botón marcar completado (verde) ── */
+/* Botón marcar completado (verde) */
 .btn-completar {
   padding: 7px 16px;
   background: var(--verde);
@@ -127,7 +127,7 @@
   box-shadow: none;
 }
 
-/* ── Icono calendario en tabla sanitario ── */
+/* Icono calendario en tabla sanitario */
 .fecha-cell {
   display: flex;
   align-items: center;
@@ -140,7 +140,7 @@
   flex-shrink: 0;
 }
 
-/* ── Badge pendiente / completado / ejecutado ── */
+/* Badge pendiente / completado / ejecutado */
 .badge-pending {
   background: #fef3cd;
   color: #856404;
@@ -151,7 +151,7 @@
   color: #1a6b30;
 }
 
-/* ── Nav logo box ── */
+/* Nav logo box */
 .nav-logo-box {
   width: 40px;
   height: 40px;
@@ -170,7 +170,7 @@
   object-fit: cover;
 }
 
-/* ── Loading state ── */
+/* Loading state */
 .loading-panel {
   display: flex;
   align-items: center;
@@ -180,7 +180,7 @@
   font-size: 14px;
 }
 
-/* ── Responsive select en pesajes ── */
+/* Responsive select en pesajes */
 #filtro-bovino-pesaje {
   width: 100%;
   padding: 10px 14px;
