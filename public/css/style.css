@@ -35,7 +35,12 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f0faf3 0%, #e8f5ec 50%, #d4edda 100%);
+   background: linear-gradient(
+    135deg,
+    #1B5E20 0%,
+    #2E7D32 50%,
+    #43A047 100%
+);
 }
 
 .login-card {
