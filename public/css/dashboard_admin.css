@@ -250,3 +250,282 @@
       color: var(--texto-suave);
       font-size: 14px;
     }
+
+    /* RSPONSIVE DASHBOARD ADMIN */
+
+/* ── TABLET GRANDE (max 1024px) ── */
+@media (max-width: 1024px) {
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .rep-row-1,
+  .rep-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── TABLET (max 768px) ── */
+@media (max-width: 768px) {
+
+  /* KPIs 2 columnas */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .kpi-card {
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+
+  .kpi-value {
+    font-size: 26px;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+  }
+
+  .kpi-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .kpi-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  /* Section header */
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Formulario */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-save,
+  .btn-cancel {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Tabla scroll horizontal */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+  }
+
+  table {
+    min-width: 520px;
+  }
+
+  thead th {
+    font-size: 11px;
+    padding: 10px 10px;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    font-size: 12px;
+    padding: 10px 10px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* Reportes */
+  .rep-row-1,
+  .rep-row-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .rep-card {
+    padding: 16px;
+  }
+
+  .rep-card-title {
+    font-size: 13px;
+  }
+
+  .hato-number {
+    font-size: 40px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    margin: 0;
+    padding: 24px 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-actions .btn-cancel,
+  .modal-actions .btn-delete {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ── MÓVIL PEQUEÑO (max 480px) ── */
+@media (max-width: 480px) {
+
+  /* KPIs 1 columna */
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .kpi-card {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+  }
+
+  .kpi-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+  }
+
+  /* Tabla */
+  thead th {
+    font-size: 10px;
+    padding: 8px 8px;
+  }
+
+  tbody td {
+    font-size: 11px;
+    padding: 8px 8px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 4px 8px;
+    font-size: 10px;
+    margin-right: 3px;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 3px 7px;
+  }
+
+  /* Reportes */
+  .rep-card {
+    padding: 14px;
+  }
+
+  .rep-card-title {
+    font-size: 13px;
+  }
+
+  .rep-card-sub {
+    font-size: 11px;
+  }
+
+  .hato-number {
+    font-size: 36px;
+  }
+
+  .hato-label {
+    font-size: 12px;
+  }
+
+  /* Formulario */
+  .form-group-inline label {
+    font-size: 12px;
+  }
+
+  .form-group-inline input,
+  .form-group-inline select {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  /* Modal */
+  .modal {
+    padding: 20px 16px;
+  }
+
+  .modal-title {
+    font-size: 15px;
+  }
+}
