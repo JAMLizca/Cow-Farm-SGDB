@@ -58,15 +58,16 @@ async function cargarBovinos() {
     const bovinos = await apiGet('bovinos', { finca_id: finca.id });
 
     // KPIs por categoría y estado
-    const toros    = bovinos.filter(b => ['Toro','Novillo','Becerro'].includes(b.categoria)).length;
-    const terneras = bovinos.filter(b => ['Ternera','Ternero','Vaca','Novilla'].includes(b.categoria)).length;
-    const obs      = bovinos.filter(b => b.estado_salud === 'En observación').length;
-    const trat     = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
+  // KPIs
+const toros    = bovinos.filter(b => ['Toro', 'Novillo', 'Becerro', 'Ternero'].includes(b.categoria)).length;
+const terneras = bovinos.filter(b => ['Vaca', 'Ternera', 'Novilla'].includes(b.categoria)).length;
+const obs      = bovinos.filter(b => b.estado_salud === 'En observación').length;
+const trat     = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
 
-    document.getElementById('stat-toro').textContent    = toros;
-    document.getElementById('stat-ternera').textContent = terneras;
-    document.getElementById('stat-obs').textContent     = obs;
-    document.getElementById('stat-trat').textContent    = trat;
+document.getElementById('stat-toro').textContent    = toros;
+document.getElementById('stat-ternera').textContent = terneras;
+document.getElementById('stat-obs').textContent     = obs;
+document.getElementById('stat-trat').textContent    = trat;
 
     // Tabla
     const tbody = document.getElementById('tabla-bovinos');
