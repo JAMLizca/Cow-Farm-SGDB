@@ -253,7 +253,7 @@
 
     /* RSPONSIVE DASHBOARD ADMIN */
 
-/* ── TABLET GRANDE (max 1024px) ── */
+/* TABLET GRANDE (max 1024px) */
 @media (max-width: 1024px) {
 
   .kpi-grid {
@@ -271,7 +271,7 @@
   }
 }
 
-/* ── TABLET (max 768px) ── */
+/* TABLET (max 768px) */
 @media (max-width: 768px) {
 
   /* KPIs 2 columnas */
@@ -420,7 +420,7 @@
   }
 }
 
-/* ── MÓVIL PEQUEÑO (max 480px) ── */
+/* MÓVIL PEQUEÑO (max 480px) */
 @media (max-width: 480px) {
 
   /* KPIs 1 columna */
