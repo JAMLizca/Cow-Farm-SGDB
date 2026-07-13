@@ -10,6 +10,7 @@ use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\EventoSanitarioController;
 use App\Http\Controllers\AlimentacionController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\PasswordResetController;
 
 // Ruta de login
 Route::post('/login', [AuthController::class, 'login']);
@@ -78,3 +79,7 @@ Route::put('/superadmin/fincas/{id}',         [SuperAdminController::class, 'upd
 Route::delete('/superadmin/fincas/{id}',      [SuperAdminController::class, 'destroy']);
 Route::patch('/superadmin/fincas/{id}/toggle',[SuperAdminController::class, 'toggleActivo']);
 Route::get('/superadmin/fincas/{id}/usuarios',[SuperAdminController::class, 'usuarios']);
+
+// Recuperación de contraseña
+Route::post('/password/solicitar',    [PasswordResetController::class, 'solicitar']);
+Route::post('/password/restablecer',  [PasswordResetController::class, 'restablecer']);

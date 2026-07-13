@@ -3,18 +3,18 @@ const { usuario, finca } = verificarSesion();
 
 // ── Info navbar y sidebar ──
 document.getElementById('navbar-user') && (document.getElementById('navbar-user').textContent = finca.nombre);
-document.getElementById('user-name').textContent   = usuario.nombre;
+document.getElementById('user-name').textContent = usuario.nombre;
 document.getElementById('user-avatar').textContent = usuario.nombre.charAt(0).toUpperCase();
 
 // Var globales
-let editBovinoId  = null;
+let editBovinoId = null;
 let editUsuarioId = null;
-let deleteTarget  = null;
-let deleteType    = null;
-let chartLeche    = null;
-let chartEstado   = null;
-let chartPeso     = null;
-let chartSan      = null;
+let deleteTarget = null;
+let deleteType = null;
+let chartLeche = null;
+let chartEstado = null;
+let chartPeso = null;
+let chartSan = null;
 
 // Mostrar panel
 function showPanel(name) {
@@ -22,10 +22,10 @@ function showPanel(name) {
     document.getElementById('panel-' + name).classList.add('active');
     document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
     document.getElementById('menu-' + name).classList.add('active');
-    if (name === 'bovinos')   cargarBovinos();
-    if (name === 'usuarios')  cargarUsuarios();
+    if (name === 'bovinos') cargarBovinos();
+    if (name === 'usuarios') cargarUsuarios();
     if (name === 'sanitario') cargarSanitario();
-    if (name === 'reportes')  cargarReportes();
+    if (name === 'reportes') cargarReportes();
 }
 
 // Toast 
@@ -33,13 +33,13 @@ let toastTimer;
 function showToast(msg, type = '') {
     const t = document.getElementById('toast');
     t.textContent = msg;
-    t.className   = 'toast show ' + type;
+    t.className = 'toast show ' + type;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => { t.className = 'toast'; }, 3000);
 }
 
 // Modal
-function openModal(id)  { document.getElementById(id).classList.add('show'); }
+function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(o => {
     o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
@@ -47,8 +47,8 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
 
 // Badge estado salud
 function badgeEstado(estado) {
-    if (estado === 'Saludable')       return `<span class="badge badge-green">${estado}</span>`;
-    if (estado === 'En tratamiento')  return `<span class="badge badge-red">${estado}</span>`;
+    if (estado === 'Saludable') return `<span class="badge badge-green">${estado}</span>`;
+    if (estado === 'En tratamiento') return `<span class="badge badge-red">${estado}</span>`;
     return `<span class="badge badge-yellow">${estado}</span>`;
 }
 
@@ -58,16 +58,16 @@ async function cargarBovinos() {
     const bovinos = await apiGet('bovinos', { finca_id: finca.id });
 
     // KPIs por categoría y estado
-  // KPIs
-const toros    = bovinos.filter(b => ['Toro', 'Novillo', 'Becerro', 'Ternero'].includes(b.categoria)).length;
-const terneras = bovinos.filter(b => ['Vaca', 'Ternera', 'Novilla'].includes(b.categoria)).length;
-const obs      = bovinos.filter(b => b.estado_salud === 'En observación').length;
-const trat     = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
+    // KPIs
+    const toros = bovinos.filter(b => ['Toro', 'Novillo', 'Becerro', 'Ternero'].includes(b.categoria)).length;
+    const terneras = bovinos.filter(b => ['Vaca', 'Ternera', 'Novilla'].includes(b.categoria)).length;
+    const obs = bovinos.filter(b => b.estado_salud === 'En observación').length;
+    const trat = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
 
-document.getElementById('stat-toro').textContent    = toros;
-document.getElementById('stat-ternera').textContent = terneras;
-document.getElementById('stat-obs').textContent     = obs;
-document.getElementById('stat-trat').textContent    = trat;
+    document.getElementById('stat-toro').textContent = toros;
+    document.getElementById('stat-ternera').textContent = terneras;
+    document.getElementById('stat-obs').textContent = obs;
+    document.getElementById('stat-trat').textContent = trat;
 
     // Tabla
     const tbody = document.getElementById('tabla-bovinos');
@@ -96,7 +96,7 @@ document.getElementById('stat-trat').textContent    = trat;
 
 async function cargarRazas() {
     const razas = await apiGet('razas');
-    const sel   = document.getElementById('f-raza');
+    const sel = document.getElementById('f-raza');
     sel.innerHTML = '<option value="">Seleccionar raza</option>';
     razas.forEach(r => {
         sel.innerHTML += `<option value="${r.id}">${r.nombre}</option>`;
@@ -106,12 +106,12 @@ async function cargarRazas() {
 function openFormBovino() {
     editBovinoId = null;
     document.getElementById('form-bovino-title').textContent = 'Registrar Bovino';
-    ['f-arete','f-nombre','f-peso'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('f-sexo').value      = '';
+    ['f-arete', 'f-nombre', 'f-peso'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-sexo').value = '';
     document.getElementById('f-categoria').value = '';
     document.getElementById('f-proposito').value = '';
-    document.getElementById('f-fecha').value     = '';
-    document.getElementById('f-estado').value    = '';
+    document.getElementById('f-fecha').value = '';
+    document.getElementById('f-estado').value = '';
     cargarRazas();
     document.getElementById('form-bovino-card').style.display = 'block';
     document.getElementById('form-bovino-card').scrollIntoView({ behavior: 'smooth' });
@@ -121,14 +121,14 @@ async function editBovino(id) {
     const b = await apiGet(`bovinos/${id}`);
     editBovinoId = id;
     document.getElementById('form-bovino-title').textContent = 'Editar Bovino — ' + b.nombre;
-    document.getElementById('f-arete').value     = b.arete;
-    document.getElementById('f-nombre').value    = b.nombre;
-    document.getElementById('f-sexo').value      = b.sexo;
+    document.getElementById('f-arete').value = b.arete;
+    document.getElementById('f-nombre').value = b.nombre;
+    document.getElementById('f-sexo').value = b.sexo;
     document.getElementById('f-categoria').value = b.categoria;
     document.getElementById('f-proposito').value = b.proposito;
-    document.getElementById('f-fecha').value     = b.fecha_nacimiento;
-    document.getElementById('f-peso').value      = b.peso_inicial;
-    document.getElementById('f-estado').value    = b.estado_salud;
+    document.getElementById('f-fecha').value = b.fecha_nacimiento;
+    document.getElementById('f-peso').value = b.peso_inicial;
+    document.getElementById('f-estado').value = b.estado_salud;
     await cargarRazas();
     document.getElementById('f-raza').value = b.raza_id;
     document.getElementById('form-bovino-card').style.display = 'block';
@@ -137,16 +137,16 @@ async function editBovino(id) {
 
 async function saveBovino() {
     const body = {
-        finca_id:         finca.id,
-        raza_id:          document.getElementById('f-raza').value,
-        arete:            document.getElementById('f-arete').value.trim(),
-        nombre:           document.getElementById('f-nombre').value.trim(),
-        sexo:             document.getElementById('f-sexo').value,
-        categoria:        document.getElementById('f-categoria').value,
-        proposito:        document.getElementById('f-proposito').value,
+        finca_id: finca.id,
+        raza_id: document.getElementById('f-raza').value,
+        arete: document.getElementById('f-arete').value.trim(),
+        nombre: document.getElementById('f-nombre').value.trim(),
+        sexo: document.getElementById('f-sexo').value,
+        categoria: document.getElementById('f-categoria').value,
+        proposito: document.getElementById('f-proposito').value,
         fecha_nacimiento: document.getElementById('f-fecha').value,
-        peso_inicial:     document.getElementById('f-peso').value,
-        estado_salud:     document.getElementById('f-estado').value,
+        peso_inicial: document.getElementById('f-peso').value,
+        estado_salud: document.getElementById('f-estado').value,
     };
 
     if (!body.arete || !body.nombre || !body.sexo || !body.categoria || !body.raza_id || !body.estado_salud || !body.proposito) {
@@ -180,7 +180,7 @@ function cancelFormBovino() {
 
 async function cargarUsuarios() {
     const usuarios = await apiGet('usuarios', { finca_id: finca.id });
-    const tbody    = document.getElementById('tabla-usuarios');
+    const tbody = document.getElementById('tabla-usuarios');
     tbody.innerHTML = '';
 
     if (!usuarios.length) {
@@ -189,7 +189,7 @@ async function cargarUsuarios() {
     }
 
     usuarios.forEach(u => {
-        const rolBadge    = u.rol === 'admin' ? `<span class="badge badge-admin">ADMIN</span>` : `<span class="badge badge-emp">EMPLEADO</span>`;
+        const rolBadge = u.rol === 'admin' ? `<span class="badge badge-admin">ADMIN</span>` : `<span class="badge badge-emp">EMPLEADO</span>`;
         const estadoBadge = u.activo ? `<span class="badge badge-green">Activo</span>` : `<span class="badge badge-red">Inactivo</span>`;
         tbody.innerHTML += `
             <tr>
@@ -208,9 +208,9 @@ async function cargarUsuarios() {
 function openFormUsuario() {
     editUsuarioId = null;
     document.getElementById('form-usuario-title').textContent = 'Agregar Usuario';
-    document.getElementById('u-nombre').value   = '';
+    document.getElementById('u-nombre').value = '';
     document.getElementById('u-password').value = '';
-    document.getElementById('u-rol').value      = 'empleado';
+    document.getElementById('u-rol').value = 'empleado';
     document.getElementById('form-usuario-card').style.display = 'block';
 }
 
@@ -219,16 +219,16 @@ async function editUsuario(id) {
     editUsuarioId = id;
     document.getElementById('form-usuario-title').textContent = 'Editar Usuario — ' + u.nombre;
     document.getElementById('u-nombre').value = u.nombre;
-    document.getElementById('u-rol').value    = u.rol;
+    document.getElementById('u-rol').value = u.rol;
     document.getElementById('form-usuario-card').style.display = 'block';
 }
 
 async function saveUsuario() {
     const body = {
         finca_id: finca.id,
-        nombre:   document.getElementById('u-nombre').value.trim(),
+        nombre: document.getElementById('u-nombre').value.trim(),
         password: document.getElementById('u-password').value.trim(),
-        rol:      document.getElementById('u-rol').value,
+        rol: document.getElementById('u-rol').value,
     };
 
     if (!body.nombre || (!editUsuarioId && !body.password)) {
@@ -257,7 +257,7 @@ function cancelFormUsuario() {
 //  SANATARIO
 
 async function cargarSanitario() {
-    const eventos   = await apiGet('eventos-sanitarios', { finca_id: finca.id });
+    const eventos = await apiGet('eventos-sanitarios', { finca_id: finca.id });
     const contenido = document.getElementById('sanitario-contenido');
 
     if (!eventos.length) {
@@ -300,7 +300,7 @@ async function cargarSanitario() {
 
 async function openFormSanitario() {
     const bovinos = await apiGet('bovinos', { finca_id: finca.id });
-    const sel     = document.getElementById('s-bovino');
+    const sel = document.getElementById('s-bovino');
     sel.innerHTML = bovinos.map(b => `<option value="${b.id}">${b.arete} — ${b.nombre}</option>`).join('');
     document.getElementById('s-fecha').value = new Date().toISOString().split('T')[0];
     document.getElementById('form-sanitario-card').style.display = 'block';
@@ -308,15 +308,15 @@ async function openFormSanitario() {
 
 async function saveSanitario() {
     const body = {
-        finca_id:      finca.id,
-        bovino_id:     document.getElementById('s-bovino').value,
-        usuario_id:    usuario.id,
-        tipo:          document.getElementById('s-tipo').value,
-        producto:      document.getElementById('s-producto').value.trim(),
-        dosis:         document.getElementById('s-dosis').value.trim(),
-        fecha:         document.getElementById('s-fecha').value,
+        finca_id: finca.id,
+        bovino_id: document.getElementById('s-bovino').value,
+        usuario_id: usuario.id,
+        tipo: document.getElementById('s-tipo').value,
+        producto: document.getElementById('s-producto').value.trim(),
+        dosis: document.getElementById('s-dosis').value.trim(),
+        fecha: document.getElementById('s-fecha').value,
         proxima_fecha: document.getElementById('s-proxima-fecha').value,
-        estado:        document.getElementById('s-estado').value,
+        estado: document.getElementById('s-estado').value,
     };
 
     if (!body.producto || !body.fecha) {
@@ -338,16 +338,16 @@ function cancelFormSanitario() {
 //  REPORTES
 
 async function cargarReportes() {
-    const bovinos    = await apiGet('bovinos', { finca_id: finca.id });
-    const eventos    = await apiGet('eventos-sanitarios', { finca_id: finca.id });
+    const bovinos = await apiGet('bovinos', { finca_id: finca.id });
+    const eventos = await apiGet('eventos-sanitarios', { finca_id: finca.id });
     const produccion = await apiGet('produccion-leche', { finca_id: finca.id });
-    const pesajes    = await apiGet('pesajes', { finca_id: finca.id });
+    const pesajes = await apiGet('pesajes', { finca_id: finca.id });
 
     console.log('Produccion:', produccion);
     console.log('Pesajes:', pesajes);
 
     // ── KPIs ──
-    const hoy     = new Date().toISOString().split('T')[0];
+    const hoy = new Date().toISOString().split('T')[0];
     const prodHoy = produccion
         .filter(r => r.fecha === hoy)
         .reduce((s, r) => s + parseFloat(r.cantidad_litros || 0), 0);
@@ -356,22 +356,22 @@ async function cargarReportes() {
         ? Math.round(bovinos.reduce((s, b) => s + parseFloat(b.peso_inicial || 0), 0) / bovinos.length)
         : 0;
 
-    document.getElementById('rep-leche').textContent   = prodHoy.toFixed(1) + ' L';
-    document.getElementById('rep-peso').textContent    = pesoPromedio + ' kg';
+    document.getElementById('rep-leche').textContent = prodHoy.toFixed(1) + ' L';
+    document.getElementById('rep-peso').textContent = pesoPromedio + ' kg';
     document.getElementById('rep-vacunas').textContent = eventos.filter(e => e.tipo === 'Vacunación').length;
     document.getElementById('rep-alertas').textContent = bovinos.filter(b => b.estado_salud !== 'Saludable').length;
-    document.getElementById('hato-total').textContent  = bovinos.length;
+    document.getElementById('hato-total').textContent = bovinos.length;
 
     // ── Donut estado del hato ──
     const sanos = bovinos.filter(b => b.estado_salud === 'Saludable').length;
-    const obs   = bovinos.filter(b => b.estado_salud === 'En observación').length;
-    const trat  = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
+    const obs = bovinos.filter(b => b.estado_salud === 'En observación').length;
+    const trat = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
 
     const leyenda = document.getElementById('estado-leyenda');
     leyenda.innerHTML = [
-        { label: 'Saludable',      val: sanos, color: '#1a8f3c' },
-        { label: 'En observación', val: obs,   color: '#d69e2e' },
-        { label: 'En tratamiento', val: trat,  color: '#e53e3e' },
+        { label: 'Saludable', val: sanos, color: '#1a8f3c' },
+        { label: 'En observación', val: obs, color: '#d69e2e' },
+        { label: 'En tratamiento', val: trat, color: '#e53e3e' },
     ].map(i => `
         <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;">
             <div style="display:flex;align-items:center;gap:6px;">
@@ -382,10 +382,10 @@ async function cargarReportes() {
         </div>`).join('');
 
     // Destruir gráficas existentes antes de recrear
-    if (chartEstado)  { chartEstado.destroy();  chartEstado  = null; }
-    if (chartPeso)    { chartPeso.destroy();    chartPeso    = null; }
-    if (chartSan)     { chartSan.destroy();     chartSan     = null; }
-    if (chartLeche)   { chartLeche.destroy();   chartLeche   = null; }
+    if (chartEstado) { chartEstado.destroy(); chartEstado = null; }
+    if (chartPeso) { chartPeso.destroy(); chartPeso = null; }
+    if (chartSan) { chartSan.destroy(); chartSan = null; }
+    if (chartLeche) { chartLeche.destroy(); chartLeche = null; }
 
     // ── Donut hato ──
     chartEstado = new Chart(document.getElementById('chart-estado'), {
@@ -406,7 +406,7 @@ async function cargarReportes() {
     });
 
     // ── Barras peso por raza ──
-    const razasUnicas  = [...new Set(bovinos.map(b => b.raza ? b.raza.nombre : 'Sin raza'))];
+    const razasUnicas = [...new Set(bovinos.map(b => b.raza ? b.raza.nombre : 'Sin raza'))];
     const pesosPorRaza = razasUnicas.map(r => {
         const grupo = bovinos.filter(b => (b.raza ? b.raza.nombre : 'Sin raza') === r);
         return Math.round(grupo.reduce((s, b) => s + parseFloat(b.peso_inicial || 0), 0) / grupo.length);
@@ -419,7 +419,7 @@ async function cargarReportes() {
             datasets: [{
                 label: 'Peso (kg)',
                 data: pesosPorRaza,
-                backgroundColor: ['#1a8f3c','#3182ce','#d69e2e','#e53e3e','#718096'],
+                backgroundColor: ['#1a8f3c', '#3182ce', '#d69e2e', '#e53e3e', '#718096'],
                 borderRadius: 6,
                 borderSkipped: false,
             }]
@@ -435,7 +435,7 @@ async function cargarReportes() {
     });
 
     // ── Barras eventos sanitarios ──
-    const tipos  = ['Vacunación', 'Desparasitación', 'Tratamiento', 'Revisión'];
+    const tipos = ['Vacunación', 'Desparasitación', 'Tratamiento', 'Revisión'];
     const counts = tipos.map(t => eventos.filter(e => e.tipo === t).length);
 
     chartSan = new Chart(document.getElementById('chart-sanitario-rep'), {
@@ -445,7 +445,7 @@ async function cargarReportes() {
             datasets: [{
                 label: 'Eventos',
                 data: counts,
-                backgroundColor: ['#1a8f3c','#3182ce','#e53e3e','#d69e2e'],
+                backgroundColor: ['#1a8f3c', '#3182ce', '#e53e3e', '#d69e2e'],
                 borderRadius: 6,
                 borderSkipped: false,
             }]
@@ -511,7 +511,7 @@ async function cargarReportes() {
 
 function prepDelete(id, type) {
     deleteTarget = id;
-    deleteType   = type;
+    deleteType = type;
     openModal('modal-eliminar');
 }
 
