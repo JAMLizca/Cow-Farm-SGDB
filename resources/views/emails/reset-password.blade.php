@@ -21,3 +21,35 @@
     .footer p { margin:0; color:#aab4c0; font-size:12px; }
     .footer strong { color:#1a8f3c; }
   </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h1>SGDB — Cow Farm</h1>
+      <p>Sistema de Gestión de Bovinos</p>
+    </div>
+    <div class="body">
+      <h2>Hola, {{ $nombreUsuario }}</h2>
+      <p>
+        Recibimos una solicitud para restablecer la contraseña de tu cuenta en la finca
+        <strong>{{ $nombreFinca }}</strong>.
+      </p>
+      <p>
+        Haz clic en el botón de abajo para crear una nueva contraseña. Este enlace
+        es válido por <strong>30 minutos</strong>.
+      </p>
+      <div class="btn-wrap">
+        <a href="{{ $resetUrl }}" class="btn">Restablecer contraseña</a>
+      </div>
+      <div class="note">
+        <strong>¿No solicitaste este cambio?</strong><br>
+        Si no solicitaste restablecer tu contraseña, puedes ignorar este correo.
+        Tu contraseña actual seguirá siendo la misma y no habrá ningún cambio en tu cuenta.
+      </div>
+    </div>
+    <div class="footer">
+      <p>© 2026 <strong>SGDB Cow Farm</strong> — Sistema de Gestión de Bovinos</p>
+    </div>
+  </div>
+</body>
+</html>
