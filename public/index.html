@@ -42,6 +42,46 @@
     </div>
   </div>
 
+  <!-- MODAL RECUPERAR CONTRASEÑA -->
+<div class="modal-overlay" id="modal-recovery" style="z-index:300;">
+  <div class="modal" style="max-width:420px;">
+
+    <!-- Solicitar -->
+    <div id="recovery-step-1">
+      <div class="modal-title">¿Olvidaste tu contraseña?</div>
+      <p style="font-size:13px;color:var(--texto-suave);margin-bottom:20px;">
+        Ingresa el código de tu finca y tu correo electrónico. Te enviaremos un enlace para restablecer tu contraseña.
+      </p>
+      <div class="error-msg" id="recovery-error"></div>
+      <div class="form-group">
+        <label>Código de Finca</label>
+        <input type="text" id="recovery-finca" placeholder="Ej: FINCA001">
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" id="recovery-email" placeholder="tucorreo@ejemplo.com">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeRecovery()">Cancelar</button>
+        <button class="btn-save" onclick="solicitarRecovery()">Enviar enlace</button>
+      </div>
+    </div>
+
+    <!-- Éxito -->
+    <div id="recovery-step-2" style="display:none;text-align:center;">
+      <div style="font-size:52px;margin-bottom:12px;">📧</div>
+      <div class="modal-title">Correo enviado</div>
+      <p style="font-size:13px;color:var(--texto-suave);margin:12px 0 24px;">
+        Revisa tu bandeja de entrada. El enlace es válido por <strong>30 minutos</strong>.
+      </p>
+      <button class="btn-save" style="width:100%;justify-content:center;" onclick="closeRecovery()">
+        Entendido
+      </button>
+    </div>
+
+  </div>
+</div>
+
   <script src="js/auth.js"></script>
 
 </body>
