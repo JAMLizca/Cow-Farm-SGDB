@@ -55,3 +55,69 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('btn-login').click();
     }
 });
+
+//Nueva funcionalidad
+// Recuperación de contraseña
+function openRecovery() {
+    document.getElementById('recovery-step-1').style.display = 'block';
+    document.getElementById('recovery-step-2').style.display = 'none';
+    document.getElementById('recovery-error').style.display  = 'none';
+    document.getElementById('recovery-finca').value  = '';
+    document.getElementById('recovery-email').value  = '';
+    document.getElementById('modal-recovery').classList.add('show');
+}
+
+function closeRecovery() {
+    document.getElementById('modal-recovery').classList.remove('show');
+}
+
+async function solicitarRecovery() {
+    const codigoFinca = document.getElementById('recovery-finca').value.trim();
+    const email       = document.getElementById('recovery-email').value.trim();
+    const errorEl     = document.getElementById('recovery-error');
+
+    if (!codigoFinca || !email) {
+        errorEl.textContent   = 'Completa todos los campos.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    const btn = document.querySelector('#recovery-step-1 .btn-save');
+    btn.textContent  = 'Enviando...';
+    btn.disabled     = true;
+
+    try {
+        const res  = await fetch(`${API_URL}/password/solicitar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept':       'application/json',
+            },
+            body: JSON.stringify({
+                codigo_finca: codigoFinca,
+                email:        email,
+            }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            document.getElementById('recovery-step-1').style.display = 'none';
+            document.getElementById('recovery-step-2').style.display = 'block';
+        } else {
+            errorEl.textContent   = data.message || 'Error al enviar el correo.';
+            errorEl.style.display = 'block';
+        }
+    } catch (e) {
+        errorEl.textContent   = 'Error al conectar con el servidor.';
+        errorEl.style.display = 'block';
+    } finally {
+        btn.textContent = 'Enviar enlace';
+        btn.disabled    = false;
+    }
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('modal-recovery').addEventListener('click', function(e) {
+    if (e.target === this) closeRecovery();
+});
