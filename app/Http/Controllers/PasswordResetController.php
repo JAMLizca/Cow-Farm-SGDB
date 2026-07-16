@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
 {
-    // ── Solicitar restablecimiento ──
+    // Solicitar restablecimiento
     public function solicitar(Request $request)
     {
         $request->validate([
