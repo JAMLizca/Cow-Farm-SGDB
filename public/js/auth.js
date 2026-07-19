@@ -56,7 +56,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-//Nueva funcionalidad
+// Nueva funcionalidad
 // Recuperación de contraseña
 function openRecovery() {
     document.getElementById('recovery-step-1').style.display = 'block';
