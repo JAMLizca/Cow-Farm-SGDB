@@ -14,21 +14,31 @@
 
   <!-- NAVBAR -->
   <nav class="navbar">
+  <div class="navbar-left">
+    <div>
+      <div class="navbar-brand">Dashboard Del Admin</div>
+      <div class="navbar-finca" id="navbar-finca-nombre"></div>
+    </div>
+    <div class="navbar-divider"></div>
+    <div class="navbar-finca-badge">
+      <div class="navbar-finca-dot"></div>
+      <span id="navbar-rol">Admin</span>
+    </div>
+  </div>
 
-    <div class="navbar-brand">Dashboard Del Admin</div>
+  <div class="navbar-right">
     <div class="nav-logo-box">
       <img src="img/Logo_SGDB.png" alt="Logo">
     </div>
-
-    <!--Menu hamburguesa-->
     <button class="menu-toggle" onclick="toggleSidebar()" id="menu-toggle">
       <span></span>
       <span></span>
       <span></span>
     </button>
+  </div>
+</nav>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
-  </nav>
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-menu">

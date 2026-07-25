@@ -1,10 +1,13 @@
 // Verificar sesión 
 const { usuario, finca } = verificarSesion();
 
-// ── Info navbar y sidebar ──
+// Info navbar y sidebar
 document.getElementById('navbar-user') && (document.getElementById('navbar-user').textContent = finca.nombre);
 document.getElementById('user-name').textContent = usuario.nombre;
 document.getElementById('user-avatar').textContent = usuario.nombre.charAt(0).toUpperCase();
+// Info de la finca y rol en el navbar
+document.getElementById('navbar-finca-nombre').textContent = finca.nombre;
+document.getElementById('navbar-rol').textContent          = usuario.rol.toUpperCase();
 
 // Var globales
 let editBovinoId = null;
@@ -346,7 +349,7 @@ async function cargarReportes() {
     console.log('Produccion:', produccion);
     console.log('Pesajes:', pesajes);
 
-    // ── KPIs ──
+    // KPIs
     const hoy = new Date().toISOString().split('T')[0];
     const prodHoy = produccion
         .filter(r => r.fecha === hoy)
@@ -362,7 +365,7 @@ async function cargarReportes() {
     document.getElementById('rep-alertas').textContent = bovinos.filter(b => b.estado_salud !== 'Saludable').length;
     document.getElementById('hato-total').textContent = bovinos.length;
 
-    // ── Donut estado del hato ──
+    // Donut estado del hato
     const sanos = bovinos.filter(b => b.estado_salud === 'Saludable').length;
     const obs = bovinos.filter(b => b.estado_salud === 'En observación').length;
     const trat = bovinos.filter(b => b.estado_salud === 'En tratamiento').length;
@@ -387,7 +390,7 @@ async function cargarReportes() {
     if (chartSan) { chartSan.destroy(); chartSan = null; }
     if (chartLeche) { chartLeche.destroy(); chartLeche = null; }
 
-    // ── Donut hato ──
+    // Donut hato
     chartEstado = new Chart(document.getElementById('chart-estado'), {
         type: 'doughnut',
         data: {
@@ -405,7 +408,7 @@ async function cargarReportes() {
         }
     });
 
-    // ── Barras peso por raza ──
+    // Barras peso por raza
     const razasUnicas = [...new Set(bovinos.map(b => b.raza ? b.raza.nombre : 'Sin raza'))];
     const pesosPorRaza = razasUnicas.map(r => {
         const grupo = bovinos.filter(b => (b.raza ? b.raza.nombre : 'Sin raza') === r);
@@ -434,7 +437,7 @@ async function cargarReportes() {
         }
     });
 
-    // ── Barras eventos sanitarios ──
+    // Barras eventos sanitario
     const tipos = ['Vacunación', 'Desparasitación', 'Tratamiento', 'Revisión'];
     const counts = tipos.map(t => eventos.filter(e => e.tipo === t).length);
 
