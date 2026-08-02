@@ -462,7 +462,7 @@ async function cargarReportes() {
         }
     });
 
-    // ── Gráfica producción últimos 7 días ──
+    // Gráfica producción últimos 7 días
     const ultimos7 = [];
     for (let i = 6; i >= 0; i--) {
         const d = new Date();
@@ -538,7 +538,7 @@ async function confirmarEliminar() {
 // Cargar a inicio 
 cargarBovinos();
 
-// ── Menú hamburguesa ──
+// Menú hamburguesa
 function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebar-overlay');
