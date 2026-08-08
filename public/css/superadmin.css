@@ -691,3 +691,109 @@
     font-size: 13px;
   }
 }
+
+/* Filtros auditoría */
+.sa-filtro {
+  padding: 7px 12px;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #1a2332;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sa-filtro:focus {
+  border-color: #1a8f3c;
+}
+
+.sa-btn-limpiar {
+  padding: 7px 14px;
+  background: transparent;
+  border: 1.5px solid #e0e4ea;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #5a6a7e;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.2s;
+}
+
+.sa-btn-limpiar:hover {
+  background: #f4f6f8;
+  border-color: #1a2332;
+  color: #1a2332;
+}
+
+/* Stats auditoría */
+.sa-auditoria-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.sa-audit-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 12px 20px;
+  min-width: 90px;
+  gap: 4px;
+}
+
+.sa-audit-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1a2332;
+  line-height: 1;
+}
+
+.sa-audit-num.green {
+  color: #1a8f3c;
+}
+
+.sa-audit-num.blue {
+  color: #3182ce;
+}
+
+.sa-audit-num.yellow {
+  color: #d69e2e;
+}
+
+.sa-audit-num.red {
+  color: #e53e3e;
+}
+
+.sa-audit-label {
+  font-size: 11px;
+  color: #5a6a7e;
+  font-weight: 500;
+}
+
+/* Badges acción */
+.badge-login {
+  background: #e8f5ec;
+  color: #1a6b30;
+}
+
+.badge-crear {
+  background: #ebf8ff;
+  color: #2b6cb0;
+}
+
+.badge-editar {
+  background: #fef9e7;
+  color: #856404;
+}
+
+.badge-eliminar {
+  background: #fff5f5;
+  color: #721c24;
+}
+

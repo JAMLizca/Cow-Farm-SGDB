@@ -253,6 +253,9 @@ async function saveFinca() {
             showToast(data.message, 'green');
             closeModal('modal-finca');
             cargarFincas();
+            // Cargar filtro de fincas en auditoría
+await cargarFincasFiltro();
+await cargarAuditoria();
         } else {
             showToast('Error: ' + (data.message || JSON.stringify(data.errors)), 'red');
         }
@@ -333,3 +336,125 @@ async function verUsuarios(id, nombre) {
         showToast('Error al cargar usuarios', 'red');
     }
 }
+
+//  AUDITORÍA
+async function cargarAuditoria() {
+    const fincaId   = document.getElementById('filtro-finca-auditoria').value;
+    const modulo    = document.getElementById('filtro-modulo-auditoria').value;
+    const accion    = document.getElementById('filtro-accion-auditoria').value;
+    const fechaDesde = document.getElementById('filtro-fecha-desde').value;
+    const fechaHasta = document.getElementById('filtro-fecha-hasta').value;
+
+    const params = new URLSearchParams();
+    if (fincaId)    params.append('finca_id',    fincaId);
+    if (modulo)     params.append('modulo',      modulo);
+    if (accion)     params.append('accion',      accion);
+    if (fechaDesde) params.append('fecha_desde', fechaDesde);
+    if (fechaHasta) params.append('fecha_hasta', fechaHasta);
+
+    try {
+        const res      = await fetch(`${SA_API.replace('/superadmin', '')}/auditoria?${params.toString()}`, {
+            headers: saHeaders(),
+        });
+        const registros = await res.json();
+
+        // Stats
+        document.getElementById('audit-total').textContent   = registros.length;
+        document.getElementById('audit-logins').textContent  = registros.filter(r => r.accion === 'LOGIN').length;
+        document.getElementById('audit-crear').textContent   = registros.filter(r => r.accion === 'CREAR').length;
+        document.getElementById('audit-editar').textContent  = registros.filter(r => r.accion === 'EDITAR').length;
+        document.getElementById('audit-eliminar').textContent = registros.filter(r => r.accion === 'ELIMINAR').length;
+
+        // Tabla
+        const tbody = document.getElementById('tabla-auditoria');
+        tbody.innerHTML = '';
+
+        if (!registros.length) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:48px;color:#5a6a7e;">No hay registros de actividad</td></tr>`;
+            return;
+        }
+
+        registros.forEach(r => {
+            const fecha = new Date(r.created_at).toLocaleString('es-CO', {
+                year:   'numeric',
+                month:  '2-digit',
+                day:    '2-digit',
+                hour:   '2-digit',
+                minute: '2-digit',
+            });
+
+            const accionClass = {
+                'LOGIN':    'badge-login',
+                'CREAR':    'badge-crear',
+                'EDITAR':   'badge-editar',
+                'ELIMINAR': 'badge-eliminar',
+            }[r.accion] || 'badge-crear';
+
+            const rolBadge = r.rol_usuario === 'admin'
+                ? `<span class="badge badge-admin">ADMIN</span>`
+                : `<span class="badge badge-emp">EMPLEADO</span>`;
+
+            tbody.innerHTML += `
+                <tr>
+                    <td style="white-space:nowrap;font-size:12px;">${fecha}</td>
+                    <td style="font-size:12px;">${r.finca ? r.finca.nombre : '—'}</td>
+                    <td style="font-size:12px;font-weight:600;">${r.nombre_usuario}</td>
+                    <td>${rolBadge}</td>
+                    <td><span class="badge ${accionClass}">${r.accion}</span></td>
+                    <td style="font-size:12px;">${r.modulo}</td>
+                    <td style="font-size:12px;color:#5a6a7e;">${r.descripcion || '—'}</td>
+                </tr>`;
+        });
+
+    } catch (e) {
+        showToast('Error al cargar el historial', 'red');
+    }
+}
+
+function limpiarFiltros() {
+    document.getElementById('filtro-finca-auditoria').value   = '';
+    document.getElementById('filtro-modulo-auditoria').value  = '';
+    document.getElementById('filtro-accion-auditoria').value  = '';
+    document.getElementById('filtro-fecha-desde').value       = '';
+    document.getElementById('filtro-fecha-hasta').value       = '';
+    cargarAuditoria();
+}
+
+async function limpiarHistorial() {
+    const fincaId = document.getElementById('filtro-finca-auditoria').value;
+
+    if (!fincaId) {
+        showToast('Selecciona una finca para limpiar su historial', 'red');
+        return;
+    }
+
+    if (!confirm('¿Estás seguro de que deseas eliminar todo el historial de esta finca?')) return;
+
+    try {
+        const res  = await fetch(`${SA_API.replace('/superadmin', '')}/auditoria/${fincaId}`, {
+            method: 'DELETE',
+            headers: saHeaders(),
+        });
+        const data = await res.json();
+        showToast(data.message, 'green');
+        cargarAuditoria();
+    } catch (e) {
+        showToast('Error al limpiar el historial', 'red');
+    }
+}
+
+// Cargar fincas en filtro de auditoría
+async function cargarFincasFiltro() {
+    try {
+        const res    = await fetch(`${SA_API}/fincas`, { headers: saHeaders() });
+        const fincas = await res.json();
+        const sel    = document.getElementById('filtro-finca-auditoria');
+        sel.innerHTML = '<option value="">Todas las fincas</option>';
+        fincas.forEach(f => {
+            sel.innerHTML += `<option value="${f.id}">${f.nombre}</option>`;
+        });
+    } catch (e) {
+        console.log('Error al cargar fincas filtro:', e);
+    }
+}
+
