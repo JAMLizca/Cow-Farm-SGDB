@@ -1,8 +1,10 @@
 const API_URL = 'http://127.0.0.1:8000/api';
-//const API_URL = 'https://cow-farm-sgdb-production.up.railway.app/api';
 
 document.getElementById('btn-login').addEventListener('click', async () => {
+    await loginUsuario();
+});
 
+async function loginUsuario() {
     const codigo_finca = document.getElementById('codigo_finca').value.trim();
     const nombre       = document.getElementById('nombre').value.trim();
     const password     = document.getElementById('password').value.trim();
@@ -10,7 +12,7 @@ document.getElementById('btn-login').addEventListener('click', async () => {
 
     // Validar campos vacíos
     if (!codigo_finca || !nombre || !password) {
-        errorMsg.textContent = 'Todos los campos son obligatorios';
+        errorMsg.textContent   = 'Todos los campos son obligatorios';
         errorMsg.style.display = 'block';
         return;
     }
@@ -32,6 +34,28 @@ document.getElementById('btn-login').addEventListener('click', async () => {
             localStorage.setItem('usuario', JSON.stringify(data.usuario));
             localStorage.setItem('finca',   JSON.stringify(data.finca));
 
+            // Registrar login en auditoría
+            try {
+                await fetch(`${API_URL}/auditoria`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept':       'application/json',
+                    },
+                    body: JSON.stringify({
+                        finca_id:       data.finca.id,
+                        usuario_id:     data.usuario.id,
+                        nombre_usuario: data.usuario.nombre,
+                        rol_usuario:    data.usuario.rol,
+                        accion:         'LOGIN',
+                        modulo:         'Autenticacion',
+                        descripcion:    `Inicio de sesion exitoso en la finca ${data.finca.nombre}`,
+                    }),
+                });
+            } catch (e) {
+                console.log('Error al registrar auditoria de login:', e);
+            }
+
             // Redirigir según rol
             if (data.usuario.rol === 'admin') {
                 window.location.href = 'dashboard-admin.html';
@@ -39,31 +63,30 @@ document.getElementById('btn-login').addEventListener('click', async () => {
                 window.location.href = 'dashboard-empleado.html';
             }
         } else {
-            errorMsg.textContent = data.message || 'Credenciales incorrectas';
+            errorMsg.textContent   = data.message || 'Credenciales incorrectas';
             errorMsg.style.display = 'block';
         }
 
     } catch (error) {
-        errorMsg.textContent = 'Error al conectar con el servidor';
+        errorMsg.textContent   = 'Error al conectar con el servidor';
         errorMsg.style.display = 'block';
     }
-});
+}
 
-// Permitir login con Eter
+// Permitir login con Enter
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        document.getElementById('btn-login').click();
+        loginUsuario();
     }
 });
 
-// Nueva funcionalidad
 // Recuperación de contraseña
 function openRecovery() {
     document.getElementById('recovery-step-1').style.display = 'block';
     document.getElementById('recovery-step-2').style.display = 'none';
     document.getElementById('recovery-error').style.display  = 'none';
-    document.getElementById('recovery-finca').value  = '';
-    document.getElementById('recovery-email').value  = '';
+    document.getElementById('recovery-finca').value          = '';
+    document.getElementById('recovery-email').value          = '';
     document.getElementById('modal-recovery').classList.add('show');
 }
 
@@ -82,7 +105,7 @@ async function solicitarRecovery() {
         return;
     }
 
-    const btn = document.querySelector('#recovery-step-1 .btn-save');
+    const btn        = document.querySelector('#recovery-step-1 .btn-save');
     btn.textContent  = 'Enviando...';
     btn.disabled     = true;
 

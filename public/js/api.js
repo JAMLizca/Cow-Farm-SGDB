@@ -83,3 +83,32 @@ async function apiDelete(endpoint, id) {
 
     return response.json();
 }
+
+// Registrar auditoría
+async function registrarAuditoria(accion, modulo, descripcion) {
+    const usr = getUsuario();
+    const fnc = getFinca();
+
+    if (!usr || !fnc) return;
+
+    try {
+        await fetch(`${API_URL}/auditoria`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept':       'application/json',
+            },
+            body: JSON.stringify({
+                finca_id:       fnc.id,
+                usuario_id:     usr.id,
+                nombre_usuario: usr.nombre,
+                rol_usuario:    usr.rol,
+                accion:         accion,
+                modulo:         modulo,
+                descripcion:    descripcion,
+            }),
+        });
+    } catch (e) {
+        console.log('Error al registrar auditoria:', e);
+    }
+}

@@ -11,6 +11,7 @@ use App\Http\Controllers\EventoSanitarioController;
 use App\Http\Controllers\AlimentacionController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\AuditoriaController;
 
 // Ruta de login
 Route::post('/login', [AuthController::class, 'login']);
@@ -83,3 +84,8 @@ Route::get('/superadmin/fincas/{id}/usuarios',[SuperAdminController::class, 'usu
 // Recuperación de contraseña
 Route::post('/password/solicitar',    [PasswordResetController::class, 'solicitar']);
 Route::post('/password/restablecer',  [PasswordResetController::class, 'restablecer']);
+
+// Auditoría
+Route::get('/auditoria',           [AuditoriaController::class, 'index']);
+Route::post('/auditoria',          [AuditoriaController::class, 'store']);
+Route::delete('/auditoria/{id}',   [AuditoriaController::class, 'destroy']);

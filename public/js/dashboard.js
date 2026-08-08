@@ -161,13 +161,15 @@ async function saveBovino() {
         return;
     }
 
-    if (editBovinoId) {
-        await apiPut('bovinos', editBovinoId, body);
-        showToast('Bovino actualizado correctamente', 'green');
-    } else {
-        await apiPost('bovinos', body);
-        showToast('Bovino registrado correctamente', 'green');
-    }
+   if (editBovinoId) {
+    await apiPut('bovinos', editBovinoId, body);
+    showToast('Bovino actualizado correctamente', 'green');
+    registrarAuditoria('EDITAR', 'Bovinos', `Edito el bovino ${body.nombre} (${body.arete})`);
+} else {
+    await apiPost('bovinos', body);
+    showToast('Bovino registrado correctamente', 'green');
+    registrarAuditoria('CREAR', 'Bovinos', `Registro el bovino ${body.nombre} (${body.arete})`);
+}
 
     cancelFormBovino();
     cargarBovinos();
@@ -240,12 +242,14 @@ async function saveUsuario() {
     }
 
     if (editUsuarioId) {
-        await apiPut('usuarios', editUsuarioId, body);
-        showToast('Usuario actualizado correctamente', 'green');
-    } else {
-        await apiPost('usuarios', body);
-        showToast('Usuario creado correctamente', 'green');
-    }
+    await apiPut('usuarios', editUsuarioId, body);
+    showToast('Usuario actualizado correctamente', 'green');
+    registrarAuditoria('EDITAR', 'Usuarios', `Edito el usuario ${body.nombre}`);
+} else {
+    await apiPost('usuarios', body);
+    showToast('Usuario creado correctamente', 'green');
+    registrarAuditoria('CREAR', 'Usuarios', `Creo el usuario ${body.nombre} con rol ${body.rol}`);
+}
 
     cancelFormUsuario();
     cargarUsuarios();
@@ -327,8 +331,9 @@ async function saveSanitario() {
         return;
     }
 
-    await apiPost('eventos-sanitarios', body);
-    showToast('Evento registrado correctamente', 'green');
+   await apiPost('eventos-sanitarios', body);
+showToast('Evento registrado correctamente', 'green');
+registrarAuditoria('CREAR', 'Sanitario', `Registro evento ${body.tipo} para bovino ID ${body.bovino_id}`);
     cancelFormSanitario();
     cargarSanitario();
 }
@@ -519,19 +524,20 @@ function prepDelete(id, type) {
 }
 
 async function confirmarEliminar() {
-    if (deleteType === 'bovino') {
-        await apiDelete('bovinos', deleteTarget);
-        showToast('Bovino eliminado correctamente', 'red');
-        cargarBovinos();
-    } else if (deleteType === 'usuario') {
-        await apiDelete('usuarios', deleteTarget);
-        showToast('Usuario eliminado correctamente', 'red');
-        cargarUsuarios();
-    } else if (deleteType === 'sanitario') {
-        await apiDelete('eventos-sanitarios', deleteTarget);
-        showToast('Evento eliminado correctamente', 'red');
-        cargarSanitario();
-    }
+   if (deleteType === 'bovino') {
+    const b = await apiGet(`bovinos/${deleteTarget}`);
+    await apiDelete('bovinos', deleteTarget);
+    showToast('Bovino eliminado correctamente', 'red');
+    registrarAuditoria('ELIMINAR', 'Bovinos', `Elimino el bovino ${b.nombre} (${b.arete})`);
+} else if (deleteType === 'usuario') {
+    await apiDelete('usuarios', deleteTarget);
+    showToast('Usuario eliminado correctamente', 'red');
+    registrarAuditoria('ELIMINAR', 'Usuarios', `Elimino el usuario ID ${deleteTarget}`);
+} else if (deleteType === 'sanitario') {
+    await apiDelete('eventos-sanitarios', deleteTarget);
+    showToast('Evento eliminado correctamente', 'red');
+    registrarAuditoria('ELIMINAR', 'Sanitario', `Elimino el evento sanitario ID ${deleteTarget}`);
+}
     closeModal('modal-eliminar');
 }
 
